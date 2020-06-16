@@ -1,0 +1,20 @@
+<!-- post api -->
+
+all posts - GET
+all posts - POST (create new post)
+single post - GET
+single post - PUT (update post)
+single post - DELETE (delete post)
+
+<!-- user api -->
+
+all users - GET
+all users - POST (create new user)
+single user - GET
+single user - PUT (update user)
+single user - DELETE (delete user)
+
+There will three types of user
+	- Patient
+	- Doctor
+	- Admin
