@@ -56,6 +56,19 @@ Product Picture
 	- product_id
 
 
+Checkout
+	- id
+	- shipping address
+	- cost
+	- quantity
+	- is_complete
+
+
+Product_Checkout (Many to many - Checkout and product)
+	- product_id (foreign key to product.id)
+	- checkout_id (foreign key to checkout.id)
+
+
 History
 	- id
 	- doctor_id (foreign key to doctor.id)
