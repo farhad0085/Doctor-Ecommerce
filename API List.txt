@@ -13,6 +13,7 @@ all users - POST (create new user)
 single user - GET
 single user - PUT (update user)
 single user - DELETE (delete user)
+login_user - POST
 
 There will three types of user
 	- Patient
