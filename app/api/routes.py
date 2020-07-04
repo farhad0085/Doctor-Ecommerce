@@ -87,3 +87,43 @@ def api_add_user():
         return jsonify({"message": "Invalid role!"}), 403
 
     return jsonify({"message": "Account created!"}), 201
+
+
+@api.route("/api/get/user/<int:user_id>", methods=["GET"])
+def api_get_user(user_id):
+    """Get a single user info"""
+
+    user = User.query.get(user_id)
+
+    output = {}
+
+    if not user:
+        # if no user found with that user id
+        return jsonify(output, {"message": "Not found"}), 404
+
+    output['id'] = user.id
+    output['username'] = user.username
+    output['email'] = user.email
+    output['role'] = user.role
+    output['date_of_birth'] = user.date_of_birth
+
+    if user.role == "patient":
+        output['address'] = user.patient.address
+        output['full_name'] = user.patient.full_name
+        output['contact_no'] = user.patient.contact_no
+        output['age'] = user.patient.age
+
+    elif user.role == "doctor":
+        output['address'] = user.doctor.address
+        output['full_name'] = user.doctor.full_name
+        output['contact_no'] = user.doctor.contact_no
+        output['age'] = user.doctor.age
+
+    else:
+        output['address'] = user.super_admin.address
+        output['full_name'] = user.super_admin.full_name
+        output['contact_no'] = user.super_admin.contact_no
+        output['age'] = user.super_admin.age
+
+
+    return jsonify(output, {"message": "Success"}), 200
