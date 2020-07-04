@@ -1,6 +1,6 @@
 import datetime
 from flask_login import UserMixin
-from app import db, app, login_manager
+from app import db, app, login_manager, auth
 
 
 #this will handle user session, so we don't need to do anything
