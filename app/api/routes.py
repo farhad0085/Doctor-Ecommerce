@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify, make_response, g
 from app import bcrypt, db
 import secrets
 from app.models import User, Patient, Doctor, SuperAdmin
@@ -8,17 +8,28 @@ api = Blueprint('api', __name__)
 
 
 @auth.verify_password
-def verify_password(email, password):
-    user = User.query.filter_by(email=email).first()
-    if not user:
-        return None
+def verify_password(email_or_token, password):
 
-    if bcrypt.check_password_hash(user.password, password):
-        return user.username
+    user = User.verify_auth_token(email_or_token)
+    if not user:
+        # try to authenticate with username/password
+
+        user = User.query.filter_by(email=email_or_token).first()
+        if not user or not bcrypt.check_password_hash(user.password, password):
+            return False
+
+    g.user = user
+    return True
 
 @auth.error_handler
 def unauthorized():
     return make_response(jsonify({'error': 'Unauthorized access'}), 401)
+
+@api.route('/api/token')
+@auth.login_required
+def get_auth_token():
+    token = g.user.generate_auth_token(3600)
+    return jsonify({'token': token.decode('ascii'), 'duration': 3600})
 
 
 @api.route("/api/add/user", methods=["POST"])

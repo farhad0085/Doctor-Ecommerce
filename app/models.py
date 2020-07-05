@@ -1,6 +1,8 @@
 import datetime
 from flask_login import UserMixin
 from app import db, app, login_manager, auth
+from itsdangerous import (TimedJSONWebSignatureSerializer
+                          as Serializer, BadSignature, SignatureExpired)
 
 
 #this will handle user session, so we don't need to do anything
@@ -23,6 +25,22 @@ class User(db.Model, UserMixin):
     doctor = db.relationship('Doctor', backref='user', uselist=False)
     # create a one to one relationship between User and super_admin
     super_admin = db.relationship('SuperAdmin', backref='user', uselist=False)
+
+    def generate_auth_token(self, expiration=app.config['TOKEN_EXPIRE_IN']):
+        s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
+        return s.dumps({'id': self.id})
+
+    @staticmethod
+    def verify_auth_token(token):
+        s = Serializer(app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except SignatureExpired:
+            return None    # valid token, but expired
+        except BadSignature:
+            return None    # invalid token
+        user = User.query.get(data['id'])
+        return user
     
 class Patient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
