@@ -199,6 +199,98 @@ def api_get_users():
     return jsonify(users_list, {"message": "Success"}), 200
 
 
+@api.route("/api/add/user/<int:user_id>", methods=["PUT"])
+def api_edit_user(user_id):
+
+    """Edit new user
+    Will receive data like this
+    {
+        "email": "farhadhossain0085@gmail.com",
+        "date_of_birth": "1999-06-18",
+        "role": "patient" or "doctor" "super_admin"
+        "password": "1234",
+        "full_name": "Farhad Hossain",
+        "address": "Stadium para, Maijdee court",
+        "contact_no": "01983495680",
+        "age": 21
+    }
+    """
+
+    user = User.query.get(user_id)
+
+    if not user:
+    	return jsonify({"message": "Not found"}), 404
+
+    data = request.get_json()
+
+    username = secrets.token_hex(8)
+    email = data['email'].lower()
+    password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
+    date_of_birth = data['date_of_birth']
+    role = data['role']
+
+    full_name = data['full_name']
+    address = data['address']
+    contact_no = data['contact_no']
+    age = data['age']
+
+    # check if email already exists
+    if user.email != email:
+	    user = User.query.filter_by(email=email).first()
+
+    	if user:
+        	return jsonify({"message":"Hmm! User with this email already exist!"}), 403
+
+    user.username=username
+    user.email=email
+    user.password=password
+    user.date_of_birth=date_of_birth
+    user.role=role
+
+    db.session.commit()
+
+    if role == "patient":
+        # now edit the patient infos
+
+        patient = user.patient
+
+        patient.full_name=full_name
+      	patient.address=address
+      	patient.contact_no=contact_no
+	    patient.age=age
+	    patient.user_id=user.id
+
+        db.session.commit()
+
+    elif role == "doctor":
+        # now edit the doctor infos
+        doctor = user.doctor
+
+        doctor.full_name=full_name
+      	doctor.address=address
+      	doctor.contact_no=contact_no
+	    doctor.age=age
+	    doctor.user_id=user.id
+
+        db.session.commit()
+
+    elif role == "super_admin":
+        # now edit the super_admin infos
+        super_admin = user.super_admin
+
+        super_admin.full_name=full_name
+      	super_admin.address=address
+      	super_admin.contact_no=contact_no
+	    super_admin.age=age
+	    super_admin.user_id=user.id
+
+        db.session.commit()
+    else:
+        return jsonify({"message": "Invalid role!"}), 403
+
+    return jsonify({"message": "Account update!"}), 200
+
+
 @api.route("/api/get/user/<int:user_id>", methods=["DELETE"])
 @auth.login_required
 def api_delete_user(user_id):
