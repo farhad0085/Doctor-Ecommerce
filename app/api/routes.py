@@ -197,3 +197,19 @@ def api_get_users():
 
 
     return jsonify(users_list, {"message": "Success"}), 200
+
+
+@api.route("/api/get/user/<int:user_id>", methods=["DELETE"])
+@auth.login_required
+def api_delete_user(user_id):
+    """Get a single user info"""
+
+    user = User.query.get(user_id)
+
+    if not user:
+    	return jsonify({"message": "Not found"}), 404
+
+    db.session.delete(user)
+    db.session.commit()
+
+    return jsonify({"message": "Success"}), 200
