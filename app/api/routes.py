@@ -154,3 +154,46 @@ def api_get_user(user_id):
 
 
     return jsonify(output, {"message": "Success"}), 200
+
+
+@api.route("/api/get/users", methods=["GET"])
+@auth.login_required
+def api_get_users():
+    """Get a single user info"""
+
+    users = User.query.all()
+
+    users_list = []
+
+    for user in users:
+
+	    output = {}
+
+	    output['id'] = user.id
+	    output['username'] = user.username
+	    output['email'] = user.email
+	    output['role'] = user.role
+	    output['date_of_birth'] = user.date_of_birth
+
+	    if user.role == "patient":
+	        output['address'] = user.patient.address
+	        output['full_name'] = user.patient.full_name
+	        output['contact_no'] = user.patient.contact_no
+	        output['age'] = user.patient.age
+
+	    elif user.role == "doctor":
+	        output['address'] = user.doctor.address
+	        output['full_name'] = user.doctor.full_name
+	        output['contact_no'] = user.doctor.contact_no
+	        output['age'] = user.doctor.age
+
+	    else:
+	        output['address'] = user.super_admin.address
+	        output['full_name'] = user.super_admin.full_name
+	        output['contact_no'] = user.super_admin.contact_no
+	        output['age'] = user.super_admin.age
+
+	    users_list.append(output)
+
+
+    return jsonify(users_list, {"message": "Success"}), 200
