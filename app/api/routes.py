@@ -305,3 +305,17 @@ def api_delete_user(user_id):
     db.session.commit()
 
     return jsonify({"message": "Success"}), 200
+
+# User's API ends here!
+
+# Product API starts
+
+@api.route("/api/get/product/<int:product_id>", methods=["GET"])
+@auth.login_required
+def api_get_product(product_id):
+	return None
+
+@api.route("/api/get/products", methods=["GET"])
+@auth.login_required
+def api_get_products():
+	return None

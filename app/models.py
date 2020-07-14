@@ -25,6 +25,9 @@ class User(db.Model, UserMixin):
     doctor = db.relationship('Doctor', backref='user', uselist=False)
     # create a one to one relationship between User and super_admin
     super_admin = db.relationship('SuperAdmin', backref='user', uselist=False)
+    
+    # create a one to many relationship between user and comment
+    comments = db.relationship('ProductComment', backref='user', lazy=True)
 
     def generate_auth_token(self, expiration=app.config['TOKEN_EXPIRE_IN']):
         s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
@@ -71,3 +74,42 @@ class SuperAdmin(db.Model):
     profile_pic = db.Column(db.String(50), default="default.png")
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+# many to many between gym and trainers
+product_checkout = db.Table('product_checkout', db.Column('product_id', db.Integer, db.ForeignKey('product.id')),
+                            db.Column('checkout_id', db.Integer, db.ForeignKey('checkout.id')))
+
+class Product(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200))
+    description = db.Column(db.String(5000))
+    price = db.Column(db.Numeric)
+    quantity = db.Column(db.Integer)
+    post_date = db.Column(db.DateTime, default=datetime.datetime.now)
+    last_modified = db.Column(db.DateTime, default=datetime.datetime.now)
+
+    pictures = db.relationship('ProductPicture', backref='product', lazy=True)
+    comments = db.relationship('ProductComment', backref='product', lazy=True)
+
+class Checkout(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    shipping_address = db.Column(db.String(500))
+    cost = db.Column(db.Integer)
+    quantity = db.Column(db.Integer)
+    checkout_time = db.Column(db.DateTime, default=datetime.datetime.now)
+    is_completed = db.Column(db.Integer) # 0 for pending checkout 1 for completed one
+
+    # many to many between product and checkout
+    products = db.relationship('Product', secondary=product_checkout, backref=db.backref('checkout', lazy=True))
+
+class ProductPicture(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+    picture = db.Column(db.String(100))
+
+class ProductComment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+    comment_author = db.Column(db.Integer, db.ForeignKey('user.id'))
+    comment_content = db.Column(db.String(1000))
+    comment_date = db.Column(db.DateTime, default=datetime.datetime.now)
