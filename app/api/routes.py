@@ -167,33 +167,33 @@ def api_get_users():
 
     for user in users:
 
-	    output = {}
+        output = {}
 
-	    output['id'] = user.id
-	    output['username'] = user.username
-	    output['email'] = user.email
-	    output['role'] = user.role
-	    output['date_of_birth'] = user.date_of_birth
+        output['id'] = user.id
+        output['username'] = user.username
+        output['email'] = user.email
+        output['role'] = user.role
+        output['date_of_birth'] = user.date_of_birth
 
-	    if user.role == "patient":
-	        output['address'] = user.patient.address
-	        output['full_name'] = user.patient.full_name
-	        output['contact_no'] = user.patient.contact_no
-	        output['age'] = user.patient.age
+        if user.role == "patient":
+            output['address'] = user.patient.address
+            output['full_name'] = user.patient.full_name
+            output['contact_no'] = user.patient.contact_no
+            output['age'] = user.patient.age
 
-	    elif user.role == "doctor":
-	        output['address'] = user.doctor.address
-	        output['full_name'] = user.doctor.full_name
-	        output['contact_no'] = user.doctor.contact_no
-	        output['age'] = user.doctor.age
+        elif user.role == "doctor":
+            output['address'] = user.doctor.address
+            output['full_name'] = user.doctor.full_name
+            output['contact_no'] = user.doctor.contact_no
+            output['age'] = user.doctor.age
 
-	    else:
-	        output['address'] = user.super_admin.address
-	        output['full_name'] = user.super_admin.full_name
-	        output['contact_no'] = user.super_admin.contact_no
-	        output['age'] = user.super_admin.age
+        else:
+            output['address'] = user.super_admin.address
+            output['full_name'] = user.super_admin.full_name
+            output['contact_no'] = user.super_admin.contact_no
+            output['age'] = user.super_admin.age
 
-	    users_list.append(output)
+        users_list.append(output)
 
 
     return jsonify(users_list, {"message": "Success"}), 200
@@ -219,7 +219,7 @@ def api_edit_user(user_id):
     user = User.query.get(user_id)
 
     if not user:
-    	return jsonify({"message": "Not found"}), 404
+        return jsonify({"message": "Not found"}), 404
 
     data = request.get_json()
 
@@ -236,10 +236,10 @@ def api_edit_user(user_id):
 
     # check if email already exists
     if user.email != email:
-	    user = User.query.filter_by(email=email).first()
+        user = User.query.filter_by(email=email).first()
 
-    	if user:
-        	return jsonify({"message":"Hmm! User with this email already exist!"}), 403
+        if user:
+            return jsonify({"message":"Hmm! User with this email already exist!"}), 403
 
     user.username=username
     user.email=email
@@ -255,10 +255,10 @@ def api_edit_user(user_id):
         patient = user.patient
 
         patient.full_name=full_name
-      	patient.address=address
-      	patient.contact_no=contact_no
-	    patient.age=age
-	    patient.user_id=user.id
+        patient.address=address
+        patient.contact_no=contact_no
+        patient.age=age
+        patient.user_id=user.id
 
         db.session.commit()
 
@@ -267,10 +267,10 @@ def api_edit_user(user_id):
         doctor = user.doctor
 
         doctor.full_name=full_name
-      	doctor.address=address
-      	doctor.contact_no=contact_no
-	    doctor.age=age
-	    doctor.user_id=user.id
+        doctor.address=address
+        doctor.contact_no=contact_no
+        doctor.age=age
+        doctor.user_id=user.id
 
         db.session.commit()
 
@@ -279,10 +279,10 @@ def api_edit_user(user_id):
         super_admin = user.super_admin
 
         super_admin.full_name=full_name
-      	super_admin.address=address
-      	super_admin.contact_no=contact_no
-	    super_admin.age=age
-	    super_admin.user_id=user.id
+        super_admin.address=address
+        super_admin.contact_no=contact_no
+        super_admin.age=age
+        super_admin.user_id=user.id
 
         db.session.commit()
     else:
@@ -299,7 +299,7 @@ def api_delete_user(user_id):
     user = User.query.get(user_id)
 
     if not user:
-    	return jsonify({"message": "Not found"}), 404
+        return jsonify({"message": "Not found"}), 404
 
     db.session.delete(user)
     db.session.commit()
