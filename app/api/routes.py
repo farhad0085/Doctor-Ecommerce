@@ -1,8 +1,9 @@
 from flask import Blueprint, request, jsonify, make_response, g
 from app import bcrypt, db
-import secrets
-from app.models import User, Patient, Doctor, SuperAdmin
+import secrets, base64
+from app.models import User, Patient, Doctor, SuperAdmin, Product, ProductPicture
 from app import auth
+from app.utils import save_picture
 
 api = Blueprint('api', __name__)
 
@@ -45,7 +46,8 @@ def api_add_user():
         "full_name": "Farhad Hossain",
         "address": "Stadium para, Maijdee court",
         "contact_no": "01983495680",
-        "age": 21
+        "age": 21,
+        "profile_pic": "base64 encoded image string"
     }
     """
 
@@ -61,12 +63,17 @@ def api_add_user():
     address = data['address']
     contact_no = data['contact_no']
     age = data['age']
+    profile_pic = data['profile_pic']
+
+    if 'profile_pic' in data:
+        imgdata = base64.b64decode(profile_pic.split(',')[1])
+        filename = save_picture(img=imgdata, folder="profile_pics")
 
     # check if email already exists
     user = User.query.filter_by(email=email).first()
 
     if user:
-        return jsonify({"message":"Hmm! User with this email already exist!"}), 403
+        return jsonify({"message":"user exists"}), 403
 
     user = User(username=username,
                 email=email,
@@ -79,40 +86,67 @@ def api_add_user():
 
     if role == "patient":
         # now add the patient infos
-        patient = Patient(full_name=full_name,
-                          address=address,
-                          contact_no=contact_no,
-                          age=age,
-                          user_id=user.id)
+        if 'profile_pic' in data:
+            # now add the patient infos
+            patient = Patient(full_name=full_name,
+                              address=address,
+                              contact_no=contact_no,
+                              age=age,
+                              profile_pic=filename,
+                              user_id=user.id)
+        else:
+            patient = Patient(full_name=full_name,
+                              address=address,
+                              contact_no=contact_no,
+                              age=age,
+                              user_id=user.id)
 
         db.session.add(patient)
         db.session.commit()
 
     elif role == "doctor":
         # now add the doctor infos
-        doctor = Doctor(full_name=full_name,
-                          address=address,
-                          contact_no=contact_no,
-                          age=age,
-                          user_id=user.id)
+        if 'profile_pic' in data:
+            # now add the patient infos
+            doctor = Doctor(full_name=full_name,
+                              address=address,
+                              contact_no=contact_no,
+                              age=age,
+                              profile_pic=filename,
+                              user_id=user.id)
+        else:
+            doctor = Doctor(full_name=full_name,
+                              address=address,
+                              contact_no=contact_no,
+                              age=age,
+                              user_id=user.id)
 
         db.session.add(doctor)
         db.session.commit()
 
     elif role == "super_admin":
         # now add the super_admin infos
-        super_admin = SuperAdmin(full_name=full_name,
-                          address=address,
-                          contact_no=contact_no,
-                          age=age,
-                          user_id=user.id)
+        if 'profile_pic' in data:
+            # now add the patient infos
+            super_admin = SuperAdmin(full_name=full_name,
+                              address=address,
+                              contact_no=contact_no,
+                              age=age,
+                              profile_pic=filename,
+                              user_id=user.id)
+        else:
+            super_admin = SuperAdmin(full_name=full_name,
+                              address=address,
+                              contact_no=contact_no,
+                              age=age,
+                              user_id=user.id)
 
         db.session.add(super_admin)
         db.session.commit()
     else:
-        return jsonify({"message": "Invalid role!"}), 403
+        return jsonify({"message": "invalid role"}), 403
 
-    return jsonify({"message": "Account created!"}), 201
+    return jsonify({"message": "success"}), 201
 
 
 @api.route("/api/get/user/<int:user_id>", methods=["GET"])
@@ -126,7 +160,7 @@ def api_get_user(user_id):
 
     if not user:
         # if no user found with that user id
-        return jsonify(output, {"message": "Not found"}), 404
+        return jsonify(output, {"message": "not found"}), 404
 
     output['id'] = user.id
     output['username'] = user.username
@@ -139,21 +173,24 @@ def api_get_user(user_id):
         output['full_name'] = user.patient.full_name
         output['contact_no'] = user.patient.contact_no
         output['age'] = user.patient.age
+        output['profile_pic'] = user.patient.profile_pic
 
     elif user.role == "doctor":
         output['address'] = user.doctor.address
         output['full_name'] = user.doctor.full_name
         output['contact_no'] = user.doctor.contact_no
         output['age'] = user.doctor.age
+        output['profile_pic'] = user.doctor.profile_pic
 
     else:
         output['address'] = user.super_admin.address
         output['full_name'] = user.super_admin.full_name
         output['contact_no'] = user.super_admin.contact_no
         output['age'] = user.super_admin.age
+        output['profile_pic'] = user.super_admin.profile_pic
 
 
-    return jsonify(output, {"message": "Success"}), 200
+    return jsonify(output, {"message": "success"}), 200
 
 
 @api.route("/api/get/users", methods=["GET"])
@@ -180,23 +217,26 @@ def api_get_users():
             output['full_name'] = user.patient.full_name
             output['contact_no'] = user.patient.contact_no
             output['age'] = user.patient.age
+            output['profile_pic'] = user.patient.profile_pic
 
         elif user.role == "doctor":
             output['address'] = user.doctor.address
             output['full_name'] = user.doctor.full_name
             output['contact_no'] = user.doctor.contact_no
             output['age'] = user.doctor.age
+            output['profile_pic'] = user.doctor.profile_pic
 
         else:
             output['address'] = user.super_admin.address
             output['full_name'] = user.super_admin.full_name
             output['contact_no'] = user.super_admin.contact_no
             output['age'] = user.super_admin.age
+            output['profile_pic'] = user.super_admin.profile_pic
 
         users_list.append(output)
 
 
-    return jsonify(users_list, {"message": "Success"}), 200
+    return jsonify(users_list, {"message": "success"}), 200
 
 
 @api.route("/api/add/user/<int:user_id>", methods=["PUT"])
@@ -219,7 +259,7 @@ def api_edit_user(user_id):
     user = User.query.get(user_id)
 
     if not user:
-        return jsonify({"message": "Not found"}), 404
+        return jsonify({"message": "not found"}), 404
 
     data = request.get_json()
 
@@ -234,12 +274,18 @@ def api_edit_user(user_id):
     contact_no = data['contact_no']
     age = data['age']
 
+    profile_pic = data['profile_pic']
+
+    if 'profile_pic' in data:
+        imgdata = base64.b64decode(profile_pic.split(',')[1])
+        filename = save_picture(img=imgdata, folder="profile_pics")
+
     # check if email already exists
     if user.email != email:
         user = User.query.filter_by(email=email).first()
 
         if user:
-            return jsonify({"message":"Hmm! User with this email already exist!"}), 403
+            return jsonify({"message":"user exists"}), 403
 
     user.username=username
     user.email=email
@@ -258,6 +304,7 @@ def api_edit_user(user_id):
         patient.address=address
         patient.contact_no=contact_no
         patient.age=age
+        patient.profile_pic=filename
         patient.user_id=user.id
 
         db.session.commit()
@@ -270,6 +317,7 @@ def api_edit_user(user_id):
         doctor.address=address
         doctor.contact_no=contact_no
         doctor.age=age
+        doctor.profile_pic=filename
         doctor.user_id=user.id
 
         db.session.commit()
@@ -282,13 +330,14 @@ def api_edit_user(user_id):
         super_admin.address=address
         super_admin.contact_no=contact_no
         super_admin.age=age
+        super_admin.profile_pic=filename
         super_admin.user_id=user.id
 
         db.session.commit()
     else:
-        return jsonify({"message": "Invalid role!"}), 403
+        return jsonify({"message": "invalid role"}), 403
 
-    return jsonify({"message": "Account update!"}), 200
+    return jsonify({"message": "success"}), 200
 
 
 @api.route("/api/get/user/<int:user_id>", methods=["DELETE"])
@@ -299,23 +348,83 @@ def api_delete_user(user_id):
     user = User.query.get(user_id)
 
     if not user:
-        return jsonify({"message": "Not found"}), 404
+        return jsonify({"message": "not found"}), 404
 
     db.session.delete(user)
     db.session.commit()
 
-    return jsonify({"message": "Success"}), 200
+    return jsonify({"message": "success"}), 200
 
 # User's API ends here!
 
 # Product API starts
 
+@api.route("/api/add/product", methods=["POST"])
+@auth.login_required
+def api_add_product():
+    """
+    Add product
+    {
+        "name": "Paracetemol",
+        "description": "Paracetemol is a very good medicine",
+        "price": 20,
+        "quantity": 5,
+        "pictures": [
+                        "base64 encoded image string",
+                        "base64 encoded image string",
+                        "base64 encoded image string"
+                    ]
+    }
+    """
+
+    try:
+        data = request.get_json()
+
+        name = data['name']
+        description = data['description']
+        price = data['price']
+        quantity = data['quantity']
+        pictures = data['pictures']
+
+        product = Product(name=name,
+                        description=description,
+                        price=price,
+                        quantity=quantity)
+
+        db.session.add(product)
+        db.session.commit()
+
+        for picture in pictures:
+            imgdata = base64.b64decode(picture.split(',')[1])
+            filename = save_picture(img=imgdata, folder="product_picture")
+
+            product_picture = ProductPicture(product_id=product.id,
+                                            picture=filename)
+            db.session.add(product_picture)
+
+        db.session.commit()
+
+    except:
+        return jsonify(output, {"message": "error"}), 401
+
+    return jsonify(output, {"message": "success"}), 200
+
+
 @api.route("/api/get/product/<int:product_id>", methods=["GET"])
 @auth.login_required
 def api_get_product(product_id):
-	return None
+
+    product = Product.query.get(product_id)
+
+    output = {}
+
+    if not product:
+        # if no product found with that user id
+        return jsonify(output, {"message": "Not found"}), 404
+
+
 
 @api.route("/api/get/products", methods=["GET"])
 @auth.login_required
 def api_get_products():
-	return None
+    return None
