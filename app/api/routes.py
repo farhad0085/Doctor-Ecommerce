@@ -360,7 +360,7 @@ def api_delete_user(user_id):
 # Product API starts
 
 @api.route("/api/add/product", methods=["POST"])
-@auth.login_required
+#@auth.login_required
 def api_add_product():
     """
     Add product
@@ -405,15 +405,85 @@ def api_add_product():
         db.session.commit()
 
     except:
-        return jsonify(output, {"message": "error"}), 401
+        return jsonify({"message": "error"}), 403
+
+    output = {}
+    output['id'] = product.id
 
     return jsonify(output, {"message": "success"}), 200
 
 
-@api.route("/api/get/product/<int:product_id>", methods=["GET"])
-@auth.login_required
-def api_get_product(product_id):
+@api.route("/api/edit/product", methods=["PUT"])
+#@auth.login_required
+def api_edit_product():
+    """
+    Edit product
+    {
+        "id": 2,
+        "name": "Paracetemol",
+        "description": "Paracetemol is a very good medicine",
+        "price": 20,
+        "quantity": 5,
+        "pictures": [
+                        "base64 encoded image string",
+                        "base64 encoded image string",
+                        "base64 encoded image string"
+                    ]
+    }
+    """
 
+    try:
+        data = request.get_json()
+
+        product_id = data['id']
+        name = data['name']
+        description = data['description']
+        price = data['price']
+        quantity = data['quantity']
+        pictures = data['pictures']
+
+        product = Product.query.get(product_id)
+
+        if not product:
+            return jsonify({'message' : "not found"}), 404
+
+        product.id = product_id
+        product.name = name
+        product.description = description
+        product.price = price
+        product.quantity = quantity
+
+        # remove old pictures and then add new
+        for picture in product.pictures:
+            db.session.delete(product)
+
+        db.session.commit()
+
+        for picture in pictures:
+            imgdata = base64.b64decode(picture.split(',')[1])
+            filename = save_picture(img=imgdata, folder="product_picture")
+
+            product_picture = ProductPicture(product_id=product.id,
+                                            picture=filename)
+            db.session.add(product_picture)
+
+        db.session.commit()
+
+    except:
+        return jsonify({"message": "error"}), 403
+
+    output = {}
+    output['id'] = product.id
+
+    return jsonify(output, {"message": "success"}), 200
+
+
+
+@api.route("/api/get/product/<int:product_id>", methods=["GET"])
+def api_get_product(product_id):
+    """
+    Get single products
+    """
     product = Product.query.get(product_id)
 
     output = {}
@@ -422,9 +492,114 @@ def api_get_product(product_id):
         # if no product found with that user id
         return jsonify(output, {"message": "Not found"}), 404
 
+    output = {}
+    output['id'] = product.id
+    output['name'] = product.name
+    output['description'] = product.description
+    output['price'] = float(product.price)
+    output['quantity'] = product.quantity
+    output['post_date'] = product.post_date
+    output['last_modified'] = product.last_modified
+
+    # add pictures and comments to output
+    pictures = []
+    comments = []
+
+    for picture in product.pictures:
+        picture_dict = {}
+        picture_dict['id'] = picture.id
+        picture_dict['picture'] = picture.picture
+        pictures.append(picture_dict)
+
+    for comment in product.comments:
+        comment_dict = {}
+        comment_dict['id'] = comment.id
+        comment_dict['author'] = comment.comment_author
+        comment_dict['content'] = comment.comment_content
+        comment_dict['date'] = comment.comment_date
+        pictures.append(comment_dict)
+
+    # now add these to output dict
+    output['pictures'] = pictures
+    output['comments'] = comments
+
+    return jsonify(output, {"message": "success"}), 200
 
 
 @api.route("/api/get/products", methods=["GET"])
-@auth.login_required
 def api_get_products():
-    return None
+    """
+    Get all products, pagination available
+    Example : /api/get/products?per_page=20&page=2
+    """
+    try:
+        per_page = int(request.args.get('per_page'))
+        page = int(request.args.get('page'))
+    except:
+        per_page = 20
+        page = 1
+
+    products = Product.query.all()
+    total_product = len(products)
+
+    products = Product.query.order_by(Product.last_modified.desc()).paginate(page=page, per_page=per_page)
+
+    outputs = []
+
+    for product in products.items:
+        output = {}
+        output['id'] = product.id
+        output['name'] = product.name
+        output['description'] = product.description
+        output['price'] = float(product.price)
+        output['quantity'] = product.quantity
+        output['post_date'] = product.post_date
+        output['last_modified'] = product.last_modified
+
+        # add pictures and comments to output
+        pictures = []
+        comments = []
+
+        for picture in product.pictures:
+            picture_dict = {}
+            picture_dict['id'] = picture.id
+            picture_dict['picture'] = picture.picture
+            pictures.append(picture_dict)
+
+        for comment in product.comments:
+            comment_dict = {}
+            comment_dict['id'] = comment.id
+            comment_dict['author'] = comment.comment_author
+            comment_dict['content'] = comment.comment_content
+            comment_dict['date'] = comment.comment_date
+            pictures.append(comment_dict)
+
+        # now add these to output dict
+        output['pictures'] = pictures
+        output['comments'] = comments
+
+        outputs.append(output)
+
+    return jsonify(outputs, {"message" : "success", "total": total_product})
+
+@api.route("/api/delete/product/<int:product_id>", methods=["DELETE"])
+def api_delete_product(product_id):
+    product = Product.query.get(product_id)
+
+    if not product:
+        # if no product found with that user id
+        return jsonify({"message": "not found"}), 404
+
+    # first delete comments of this product
+    for comment in product.comments:
+        db.session.delete(comment)
+
+    # now delete all pictures of this product
+    for picture in product.pictures:
+        db.session.delete(picture)
+
+    db.session.delete(product)
+    db.session.commit()
+
+    return jsonify({"message" : "success"}), 200
+
