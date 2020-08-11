@@ -50,11 +50,12 @@ def api_add_user():
         "profile_pic": "base64 encoded image string"
     }
     """
-
     data = request.get_json()
-
+   
     username = secrets.token_hex(8)
+    
     email = data['email'].lower()
+
     password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
     date_of_birth = data['date_of_birth']
     role = data['role']
@@ -63,14 +64,16 @@ def api_add_user():
     address = data['address']
     contact_no = data['contact_no']
     age = data['age']
-    profile_pic = data['profile_pic']
+    
 
     if 'profile_pic' in data:
+        profile_pic = data['profile_pic']
         imgdata = base64.b64decode(profile_pic.split(',')[1])
         filename = save_picture(img=imgdata, folder="profile_pics")
-
+    
     # check if email already exists
     user = User.query.filter_by(email=email).first()
+
 
     if user:
         return jsonify({"message":"user exists"}), 403
@@ -150,7 +153,7 @@ def api_add_user():
 
 
 @api.route("/api/get/user/<int:user_id>", methods=["GET"])
-@auth.login_required
+# @auth.login_required
 def api_get_user(user_id):
     """Get a single user info"""
 
