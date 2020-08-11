@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Glaxo Derma</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+	
+	<script src="js/utils.js"></script>
+	<script src="js/basics.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/basics.css">
+    <link rel="stylesheet" type="text/css" href="css/sidebar.css">
+	<link rel="stylesheet" type="text/css" href="css/blog_home.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript">
+        
+    </script>
+</head>
+<body>
+	
+    <div class="container" id="container"> <!--Right Side Bar-->
+    	<!--Top Floting Offer-->
+    	<div> 
+	    	<div id="top-floating-offer">
+	    		<p id="top-floating-offer-text">20% Product Offer</p>
+	    	</div>
+	    	<div id="top-floating-close" style="position: fixed;margin-left: 90vw;z-index: 2;font-size: 30px">
+	    		<i class="fa fa-window-close" aria-hidden="true"></i>
+	    	</div>
+	    </div>
+
+        <div id="header">
+            <div id="header-canvas-container">
+                <canvas id="header-canvas"></canvas>
+                <div id="logo">
+                    <div id="logo-text">GLAXODERMA</div>
+                    <img id="logo-img" src="images/Glaxoderma_logo.png" >
+                    <img id="logo-grad" src="images/gradient.png">
+                </div>
+            </div>
+            <div id="header-bar" class="row">
+                <div class="col-12 col-md-8">
+                    <a href="#" type="button" class="btn nav-btn-ctm">HOME</a>
+                    <a href="#" type="button" class="btn nav-btn-ctm">PRODUCTS</a>
+                    <a href="#" type="button" class="btn nav-btn-ctm">SERVICES</a>
+                    <a href="#" type="button" class="btn nav-btn-ctm">ABOUT US</a>
+                </div>
+                <div class="col-12 col-md-4" >
+                    <a href="#" type="button" class="btn nav-btn-ctm security-info-btn">Login</a>
+                </div>
+            </div>  
+            
+        </div> 
+
+        <div class="row debug-shadow" style="margin:0px;padding: 0px">
+            <div class="col-4 col-md-3" >
+                <div id="side-bar">
+                   <h2 id="side-bar-title">BLOG</h2>
+                   <a href="#" class="side-bar-link" id="s1">BASIC GUIDELINE</a><br>
+                   <a href="#" class="side-bar-link" id="s2">ANTI-AGING</a><br>
+                   <a href="#" class="side-bar-link" id="s3">TIPS & TRICKS</a><br>
+                   <a href="#" class="side-bar-link" id="s4">HOW TO</a><br>
+                   <a href="#" class="side-bar-link" id="s5">HAIR CARE</a><br>
+                   <a href="#" class="side-bar-link" id="s6">SKIN CARE</a><br>
+                </div>
+            </div>
+            <div class="col-8 col-md-9" >
+                <div id="main-view" >
+                    <div id="main-view-title"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="sample-item-container" style="display: none">
+            <div class="sample-item-view" id="sample-item-view">
+                <div class="sample-title" id="sample-title">Title</div>&nbsp&nbsp&nbsp
+                <div class="sample-last-updated" id="sample-last-updated"><small>last updated 28 jul</small></div>
+                <div class="sample-data" id="sample-data">
+                    The description will go here
+                </div>
+            </div>                    
+        </div>
+	    
+    	<div id="footer-container">
+    		
+    	</div>
+    </div>
+
+
+    
+
+   
+    
+    <script>
+    	window.addEventListener("load",function(){
+
+            init("container","footer-container","top-floating-offer") //initializing basic elements
+
+            startFloatingOffer("top-floating-offer","container") // starting float view from basics.js. CSS is in basics.css
+            startHeaderAndCanvasBasic("header-canvas-container","logo","header-canvas") //Starting header and canvas
+
+            
+
+            // Sidebar mess
+            var selected_side_bar_id = $(".side-bar-link").first().attr("id");
+            $("#"+selected_side_bar_id).css("background-color","black").css("color","white")
+            
+            sidebarFontControl(14,22)
+            window.addEventListener("resize",function(){
+                sidebarFontControl(14,22)
+            })
+
+            $(".side-bar-link").hover(function(){
+                $(".side-bar-link").css("color","black")
+                var id = $(this).attr("id")
+
+                if($(window).width()<768){
+                    $("#"+id).css("fontSize",16+"px")
+                }
+                else{
+                    $("#"+id).css("fontSize",30+"px")   
+                }
+                $("#"+selected_side_bar_id).css("color","white")
+            },function(){
+                var id = $(this).attr("id")
+                if($(window).width()<768){
+                    $("#"+id).css("fontSize",14+"px")
+                    $("#"+selected_side_bar_id).css("fontSize",16+"px") 
+                }
+                else{
+                    $("#"+id).css("fontSize",22+"px") 
+                    $("#"+selected_side_bar_id).css("fontSize",30+"px")   
+                }
+            })
+
+            $(".side-bar-link").click(function(){
+                if(selected_side_bar_id!=""){ //resetting previous selected side-bar-item
+                    $("#"+selected_side_bar_id).css("background-color","white").css("color","black")
+                    if($(window).width()<768){
+                        $("#"+selected_side_bar_id).css("fontSize",14+"px") 
+                    }
+                    else{
+                        $("#"+selected_side_bar_id).css("fontSize",22+"px")   
+                    }
+                }
+                selected_side_bar_id= $(this).attr("id")
+                $("#"+selected_side_bar_id).css("background-color","black").css("color","white")
+
+                $("#main-view-title").html($("#"+selected_side_bar_id).html())
+            })
+
+            function sidebarFontControl(font_size1,font_size2){
+                if($(window).width()<768){
+                    $(".side-bar-link").css("fontSize",font_size1+"px") 
+                    $("#"+selected_side_bar_id).css("fontSize",16+"px")
+                    $("#side-bar-title").css("fontSize",16+"px")
+                }
+                else{
+                    $(".side-bar-link").css("fontSize",font_size2+"px")
+                    $("#"+selected_side_bar_id).css("fontSize",30+"px")  
+                    $("#side-bar-title").css("fontSize",30+"px") 
+                }
+            }
+
+            // Main View Setups
+            $("#main-view-title").html($(".side-bar-link").first().html())
+
+            var numberOfItems = 10;
+            loadIntoMainView(numberOfItems)
+
+            function loadIntoMainView(n){
+                for(var i=0;i<n;i++){
+                    var clone = $("#sample-item-view").clone()
+                    $(clone).find("#sample-title").html("Title"+i)
+
+                    $(clone).attr("id","sample-item-view"+i)
+                    $(clone).find("#sample-title").attr("id","sample-title"+i)
+                    
+
+                    // $(clone).find("#"+id).html("Title"+i)
+                    $("#main-view").append(clone)
+                    // console.log(id)
+                }
+            }
+            
+
+
+            
+            // Setting header canvas
+            // var c = document.getElementById("header-canvas");
+            // c.width = 1000;
+            // c.height = $("#header-canvas").height()/$("#header-canvas").width()*c.width;
+            // var ctx = c.getContext("2d");
+
+            // var particles=[]
+            // var timestamp=50
+            // var particle_speed = 1;
+            // c.addEventListener("mousemove",function(e){
+            //     var x_c = c.width/c.getBoundingClientRect().width*(e.pageX-c.getBoundingClientRect().left)
+            //     var y_c = c.height/c.getBoundingClientRect().height*(e.pageY-c.getBoundingClientRect().top)
+            //     var dir_angle = Math.random()*2*Math.PI
+            //     particles.push([x_c,y_c,timestamp,dir_angle])  
+            // },false)
+            
+
+            // var particle_colors = [[255, 70, 33],[128, 44, 245],[255, 28, 126],[67, 235, 52]]
+            // var color_index = 0;
+            // var color_index2 = 0;
+            
+            // function updateCanvas(){
+            //     ctx.clearRect(0, 0, c.width, c.height);
+
+            //     for (var i = 0; i <particles.length; i++) {
+            //         ctx.beginPath();
+            //         ctx.arc(particles[i][0], particles[i][1], 10, 0, 2 * Math.PI);
+                    
+            //         particles[i][0] = particles[i][0] + particle_speed*Math.cos(particles[i][3])
+            //         particles[i][1] = particles[i][1] + particle_speed*Math.sin(particles[i][3])
+                    
+            //         particles[i][2] = particles[i][2] - 1
+
+            //         if(Math.random()<0.1){
+            //                 color_index = Math.floor(Math.random() * Math.floor(particle_colors.length))
+            //         }
+
+            //         ctx.fillStyle = "rgba(+"+particle_colors[color_index][0]+","+particle_colors[color_index][1]+","+particle_colors[color_index][2]+","+particles[i][2]/timestamp+")";
+
+            //         ctx.fill();
+            //         // ctx.stroke();
+
+            //         if(particles[i][2]<=0){
+            //             particles.splice(i,1)
+            //         }
+            //     }
+
+            //     window.requestAnimationFrame(updateCanvas)
+            // }
+            // window.requestAnimationFrame(updateCanvas)
+    		
+    	})
+    </script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>

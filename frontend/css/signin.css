@@ -1,0 +1,31 @@
+#signUpBody{
+    padding-left: 15vw;
+    padding-right: 15vw;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    
+}
+
+#formBody{
+    max-width: 100%;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 3%;
+}
+
+
+.btn-signin-primary-ctm {
+    min-width: 20vw;
+    background-color: #f54b31;
+    color: white;
+}
+.btn-signin-primary-ctm:hover{
+    background-color: #ff3010;
+    color: white;
+}
+.btn-signin-primary-ctm:active {
+    background-color: #ff3010;
+    box-shadow: 0 0 5px #666;
+    transform: scale(1.1, 1.1);
+}          

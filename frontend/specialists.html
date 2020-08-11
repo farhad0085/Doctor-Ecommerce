@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+	
+	<script src="js/utils.js"></script>
+	<script src="js/basics.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/basics.css">
+    <link rel="stylesheet" type="text/css" href="css/sidebar.css">
+	<link rel="stylesheet" type="text/css" href="css/specialists.css">
+</head>
+<body>
+	<div class="container" id="container"> <!--Right Side Bar-->
+    	<!--Top Floting Offer-->
+    	<div> 
+	    	<div id="top-floating-offer">
+	    		<p id="top-floating-offer-text">20% Product Offer</p>
+	    	</div>
+	    	<div id="top-floating-close" style="position: fixed;margin-left: 90vw;z-index: 2;font-size: 30px">
+	    		<i class="fa fa-window-close" aria-hidden="true"></i>
+	    	</div>
+	    </div>
+
+	    <div id="header">
+	        <div id="header-canvas-container">
+	            <canvas id="header-canvas"></canvas>
+	            <div id="logo">
+	            	<div id="logo-text">GLAXODERMA</div>
+	            	<img id="logo-img" src="images/Glaxoderma_logo.png" >
+	            	<img id="logo-grad" src="images/gradient.png">
+	            </div>
+	        </div>
+	       	<div id="header-bar" class="row">
+	       		<div class="col-12 col-md-8">
+	          		<a href="#" type="button" class="btn nav-btn-ctm">HOME</a>
+	          		<a href="#" type="button" class="btn nav-btn-ctm">PRODUCTS</a>
+	          		<a href="#" type="button" class="btn nav-btn-ctm">SERVICES</a>
+	          		<a href="#" type="button" class="btn nav-btn-ctm">ABOUT US</a>
+	          	</div>
+	          	<div class="col-12 col-md-4" >
+	          		<a href="#" type="button" class="btn nav-btn-ctm security-info-btn">Login</a>
+	          	</div>
+	        </div>	
+	        
+        </div> 
+
+
+
+        <div class="row debug-shadow" style="margin:0px;padding: 0px">
+            <div class="col-4 col-md-3" >
+                <div id="side-bar">
+                   <h2 id="side-bar-title">SPECIALISTS</h2>
+                   <!-- <a href="#" class="side-bar-link" id="s1">BASIC GUIDELINE</a><br> -->
+                </div>
+            </div>
+            <div class="col-8 col-md-9" >
+                <div id="main-view" >
+                    <div id="main-view-title">
+                    </div>
+                    <div id="main-view-row" class="row" style="margin: 0px;padding: 0px">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="sample-item-container" style="display: none;">
+            <div class="sample-item-view" id="sample-item-view">
+            	<div class="row" style="margin: 0px;padding: 0px">
+            		<div class="col-12 col-sm-6" id="item"> <!--this part will be copied-->
+            			<div style="padding-top:10px;padding-bottom: 10px;margin-bottom: 30px;box-shadow: 0px 0px 5px gray;">
+            			<div class="row" style="margin: 0px;padding: 0px">
+            				
+	            			<div class="col-sm-12 col-md-12 col-lg-4" style="padding-top: 20px">
+	            				<img src="images/doctor1.jpg" class="img-rounded" style="width:100%;object-fit: contain;">
+	            			</div>
+	            			<div class="col-sm-12 col-md-12 col-lg-8">
+	            				<div class="sample-last-updated" id="sample-last-updated"><small>last updated 28 jul</small></div><br>
+	            				<div class="sample-title" id="sample-title">DOCTOR ANIS, MEDICAL COLLEGE, DHAKA</div>&nbsp&nbsp&nbsp
+				                
+				                <div class="sample-data" id="sample-data">
+			                   		<b>Speciality</b> : Skin Care<br>
+			                	</div>
+	            			</div>
+	            			
+            			</div>
+						</div>	            		
+            		</div>
+	             </div>
+            </div>                    
+        </div>
+	    
+    	<div id="footer-container">
+    		
+    	</div>
+    </div>
+
+    <script>
+    	window.addEventListener("load",function(){
+
+    		init("container","footer-container","top-floating-offer") //initializing basic elements
+
+    		startFloatingOffer("top-floating-offer","container") // starting float view from basics.js. CSS is in basics.css
+            startHeaderAndCanvasBasic("header-canvas-container","logo","header-canvas") //Starting header and canvas
+
+            
+            // Sidebar setup
+            var sidebar_list = ["DERMATOLOGIST","COSMETOLOGIST","BEAUTICIAN"]
+            for(var i=0;i<sidebar_list.length;i++){
+            	$("#side-bar").append('<a href="#" class="side-bar-link" id="sid'+i+'">'+sidebar_list[i]+'</a><br>')
+            	console.log("appening")
+            }
+            
+
+            // Sidebar mess
+            var selected_side_bar_id = $(".side-bar-link").first().attr("id");
+            $("#"+selected_side_bar_id).css("background-color","black").css("color","white")
+            
+            sidebarFontControl(12,22)
+            window.addEventListener("resize",function(){
+            	sidebarFontControl(12,22)
+            })
+
+            $(".side-bar-link").hover(function(){
+                $(".side-bar-link").css("color","black")
+                var id = $(this).attr("id")
+
+                if($(window).width()<768){
+                    $("#"+id).css("fontSize",14+"px")
+                }
+                else{
+                    $("#"+id).css("fontSize",26+"px")   
+                }
+                $("#"+selected_side_bar_id).css("color","white")
+            },function(){
+                var id = $(this).attr("id")
+                if($(window).width()<768){
+                    $("#"+id).css("fontSize",12+"px")
+                    $("#"+selected_side_bar_id).css("fontSize",14+"px") 
+                }
+                else{
+                    $("#"+id).css("fontSize",22+"px") 
+                    $("#"+selected_side_bar_id).css("fontSize",26+"px")   
+                }
+            })
+
+            $(".side-bar-link").click(function(){
+                if(selected_side_bar_id!=""){ //resetting previous selected side-bar-item
+                    $("#"+selected_side_bar_id).css("background-color","white").css("color","black")
+                    if($(window).width()<768){
+                        $("#"+selected_side_bar_id).css("fontSize",12+"px") 
+                    }
+                    else{
+                        $("#"+selected_side_bar_id).css("fontSize",22+"px")   
+                    }
+                }
+                selected_side_bar_id= $(this).attr("id")
+                $("#"+selected_side_bar_id).css("background-color","black").css("color","white")
+
+                $("#main-view-title").html($("#"+selected_side_bar_id).html())
+            })
+
+            function sidebarFontControl(font_size1,font_size2){
+				if($(window).width()<768){
+	                $(".side-bar-link").css("fontSize",font_size1+"px") 
+	                $("#"+selected_side_bar_id).css("fontSize",14+"px")
+	                $("#side-bar-title").css("fontSize",16+"px")
+	            }
+	            else{
+	                $(".side-bar-link").css("fontSize",font_size2+"px")
+	                $("#"+selected_side_bar_id).css("fontSize",26+"px")  
+	                $("#side-bar-title").css("fontSize",30+"px") 
+	            }
+            }
+
+            
+
+            // Main View Setups
+            $("#main-view-title").html($(".side-bar-link").first().html())
+
+            var numberOfItems = 10;
+            loadIntoMainView(numberOfItems)
+
+            function loadIntoMainView(n){
+                for(var i=0;i<n;i++){
+                    var clone = $("#item").clone()
+                    // $(clone).find("#sample-title").html("Title"+i)
+
+                    $(clone).attr("id","item"+i)
+                    // $(clone).find("#sample-title").attr("id","sample-title"+i)
+                    
+
+                    // $(clone).find("#"+id).html("Title"+i)
+                    $("#main-view-row").append(clone)
+                    // console.log(id)
+                }
+            }
+
+            //Sample View Handle
+            if($(window).width()<768){
+                $(".sample-title").css("fontSize",14+"px") 
+                $(".sample-data").css("fontSize",14+"px")
+            }
+            else{
+                $(".sample-title").css("fontSize",20+"px")
+            	$(".sample-data").css("fontSize",20+"px")
+                   
+            }
+
+
+
+            // function generateHTMLForMainViewItem(){
+            // 	var str='<div class="row" style="margin: 0px;padding: 0px"><div class="col-6"><div style="padding-top:10px;padding-bottom: 10px;box-shadow: 0px 0px 5px gray"><div class="row" style="margin: 0px;padding: 0px"><div class="col-sm-12 col-md-3"><img src="images/doctor1.jpg" class="img-rounded" style="width:100%;object-fit: contain;"></div><div class="col-sm-12 col-md-9"><div class="sample-last-updated" id="sample-last-updated"><small>last updated 28 jul</small></div><br><div class="sample-title" id="sample-title">DOCTOR ANIS, MEDICAL COLLEGE, DHAKA</div>&nbsp&nbsp&nbsp<div class="sample-data" id="sample-data"><div style="display: inline; font-size: 20px"><b>Speciality</b> : </div>Skin Care<br></div></div></div></div></div></div>'
+            // }
+            
+    	})
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>
