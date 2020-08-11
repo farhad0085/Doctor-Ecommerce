@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Glaxo Derma</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+	
+	<script src="js/utils.js"></script>
+	<script src="js/basics.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/basics.css">
+	<link rel="stylesheet" type="text/css" href="css/homepage.css">
+
+    <style>
+    	.debug-shadow{
+    		box-shadow: 0px 0px 5px #1f0e0a;
+    	}
+    </style>
+</head>
+<body>
+	
+    <div class="container debug-shadow" id="container"> <!--Right Side Bar-->
+    	<!--Top Floting Offer-->
+    	<div> 
+	    	<div id="top-floating-offer">
+	    		<p>20% Product Offer</p>
+	    	</div>
+	    	<div id="top-floating-close" style="position: fixed;margin-left: 90vw;z-index: 2;font-size: 30px">
+	    		<i class="fa fa-window-close" aria-hidden="true"></i>
+	    	</div>
+	    </div>
+
+	    <div id="header">
+            <div id="header-canvas-container">
+                <canvas id="header-canvas"></canvas>
+                <div id="logo">
+                    <div id="logo-text">GLAXODERMA</div>
+                    <img id="logo-img" src="images/Glaxoderma_logo.png" >
+                    <img id="logo-grad" src="images/gradient.png">
+                </div>
+            </div>
+            <div id="header-bar" class="row">
+                <div class="col-12 col-md-8">
+                    <a href="#" type="button" class="btn nav-btn-ctm">HOME</a>
+                    <a href="#" type="button" class="btn nav-btn-ctm">PRODUCTS</a>
+                    <a href="#" type="button" class="btn nav-btn-ctm">SERVICES</a>
+                    <a href="#" type="button" class="btn nav-btn-ctm">ABOUT US</a>
+                </div>
+                <div class="col-12 col-md-4" >
+                    <a href="#" type="button" class="btn nav-btn-ctm security-info-btn">Login</a>
+                </div>
+            </div>  
+            
+        </div> 
+
+	    <!-- <div id="logo-place" >
+	    	<img id="logo-img" src="images/WelcometoGLAXODERMA.svg" style="align-self: center;">
+		</div> -->
+ 
+    	<div class="row" id="option-view-body">
+    		<div class="col-9">
+    			<div id="main-option-view">
+    				Choose what you want to do..
+    			</div>
+    		</div>
+    		<div class="col-3" id="side-bar-handler">
+    			<div id="side-bar">
+    				<h2>MENU</h2>
+	    			<a href="#" id="PRODUCTS" class="side-bar-link">PRODUCTS</a><br>
+	    			<a href="#" id="SERIVCES" class="side-bar-link">SERVICES</a><br>
+	    			<a href="#" id="BLOG" class="side-bar-link">BLOG</a><br>
+	    			<a href="#" id="ARCHIEVE" class="side-bar-link">ARCHIEVE</a><br>
+	    			<a href="#" id="ABOUTUS" class="side-bar-link">ABOUT US</a><br>
+	    			<a href="#" id="CAREER" class="side-bar-link">CAREER</a><br>
+	    			<a href="#" id="CONTACT" class="side-bar-link">CONTACT</a><br>
+    			</div>
+    		</div>
+    	</div>
+
+    	<div id="readers-choice" class="material-container-ctm">
+    		<h2 style="text-align: center; color: black;padding: 20px">READERS CHOICE</h2>
+    		<div class="main-events"></div>
+    	</div>
+    	<div id="recent-events" class="material-container-ctm">
+    		<h2 style="text-align: center; color: black;padding: 20px">RECENT EVENTS & ACTIVITIES</h2>
+    		<div class="main-events"></div>
+    	</div>
+    	<div id="our-brands" class="material-container-ctm">
+    		<h2 style="text-align: center; color: black;padding: 20px">OUR BRANDS</h2>
+    		<div class="main-events"></div>
+    	</div>
+    	<div id="our-partners" class="material-container-ctm">
+    		<h2 style="text-align: center;color: black;padding: 20px">OUR PARTNERS</h2>
+    		<div class="main-events"></div>
+    	</div>
+    	<div id="our-acridition" class="material-container-ctm">
+    		<h2 style="text-align: center;color: black;padding: 20px">OUR ACRIDITION & ACHIEVEMENT</h2>
+    		<div class="main-events"></div>
+    	</div>
+    	<div id="testimonials" class="material-container-ctm">
+    		<h2 style="text-align: center; color: black;padding: 20px">TESTIMONIALS</h2>
+    		<div class="main-events"></div>
+    	</div>
+
+    	<div id="footer-container">
+    		
+    	</div>
+    </div>
+
+
+    
+
+   	<!-- Container to show for hover in main option view-->
+	<div id="products-hover-view" style="display: none;">
+		WANT TO VISIT<br>
+		OUR E-STORE TO <br>
+		<b>FIND OUT PRODUCTS,<br>SKINCARE SOLUTIONS<br>
+		<button type="button" class="btn btn-ctm">SHOP NOW</button>
+	</div>
+
+	<div id="blog-hover-view" style="display: none;">
+		KNOW ABOUT<br>
+		<b>SKINCARE<br>PROBLEMS<br>& SOLUTIONS<br>
+		<button type="button" class="btn btn-ctm">READ MORE</button>
+	</div>
+
+	<div id="services-hover-view" style="display: none;">
+		LOOKING FOR<br>
+		CONSULTANT WITH<br>
+		<b>DERMATOLOGIST &<br>EXPERT PROFESSIONALS<br>
+		<button type="button" class="btn btn-ctm">FIND MORE</button>
+	</div>
+	
+    
+    <script>
+    	window.addEventListener("load",function(){
+   //  		// Loading Footer
+   //  		$("#footer-container").load("templates/footer_main.html #footer-container")
+			// // setting up container
+   //  		$(".container").css("top",document.getElementById("top-floating-offer").getBoundingClientRect().bottom+"px");
+
+   //  		startFloatingOffer("top-floating-offer","container") // starting float view from basics.js. CSS is in basics.css
+    		
+    		init("container","footer-container","top-floating-offer") //initializing basic elements
+
+            startFloatingOffer("top-floating-offer","container") // starting float view from basics.js. CSS is in basics.css
+            startHeaderAndCanvasBasic("header-canvas-container","logo","header-canvas") //Starting header and canvas
+
+            
+
+    		// $("#side-bar,#main-option-view").css("height",$("#main-option-view").css("height"))
+    		//Main Option View
+    		$("#main-option-view").css("min-height",$("#side-bar").css("height"))
+
+    		// Handle when screen width < 786
+    		if($(window).width()<768){
+				$("#main-option-view").css("paddingLeft","5vw")
+				$(".side-bar-link").css("fontSize","14px")
+			}
+			else{
+				$("#main-option-view").css("paddingLeft","10vw")
+				$(".side-bar-link").css("fontSize","20px")
+			}
+    		
+			var defBackground = $("#side-bar").css("backgroundColor")
+    		$("#side-bar,#main-option-view").hover(function(){
+    			// print($("#side-bar").css("backgroundColor"))
+    			if($("#side-bar").css("backgroundColor")==defBackground){ //checking if white
+    				gsap.to("#main-option-view,#side-bar",{ // Paste
+		    			duration: 1,
+		    			backgroundColor: "#8221eb",
+	    			})
+	    			$("#main-option-view").css("color","white")
+    			}
+    		},function(){
+    			// $("#main-option-view").css("backgroundColor","white").css("color","black")
+    			// $("#side-bar").css("backgroundColor","white")
+    		})
+
+    		$(".side-bar-link").hover(function(){
+    			var id = $(this).attr("id")
+    			// console.log($("#main-option-view").css("height"))
+    			console.log($(window).width())
+    			if($(window).width()<768){
+    				$("#"+id).css("fontSize",20)
+    			}
+    			else{
+    				$("#"+id).css("fontSize",30)
+    			}
+
+    			$(".side-bar-link").css("color","black")
+
+    			if(id=="PRODUCTS"){
+    				gsap.to("#main-option-view,#side-bar",{
+		    			duration: 1,
+		    			backgroundColor: "#8221eb",
+	    			})
+    				$("#main-option-view").css("color","white")
+	    			$("#main-option-view").html($("#products-hover-view").html())
+    			}
+    			else if(id=="SERIVCES"){
+    				gsap.to("#main-option-view,#side-bar",{
+		    			duration: 1,
+		    			backgroundColor: "#f76125",
+	    			})
+	    			$("#main-option-view").css("color","white")
+	    			$("#main-option-view").html($("#services-hover-view").html())
+    			}
+    			else if(id=="BLOG"){
+    				gsap.to("#main-option-view,#side-bar",{ // Yellow
+		    			duration: 1,
+		    			backgroundColor: "#afeb38",
+	    			})
+    				$("#main-option-view").css("color","black")
+	    			$("#main-option-view").html($("#blog-hover-view").html())
+    			}
+    			else if(id=="ARCHIEVE"){
+    				gsap.to("#main-option-view,#side-bar",{ // Green
+		    			duration: 1,
+		    			backgroundColor: "#87f731",
+	    			})
+    			}
+    			else if(id=="ABOUTUS"){
+    				gsap.to("#main-option-view,#side-bar",{ // Paste
+		    			duration: 1,
+		    			backgroundColor: "#30e357",
+	    			})
+    			}
+    			else if(id=="CAREER"){
+    				gsap.to("#main-option-view,#side-bar",{ // Blue
+		    			duration: 1,
+		    			backgroundColor: "#3086e3",
+	    			})
+    			}
+    			else if(id=="CONTACT"){
+    				gsap.to("#main-option-view,#side-bar",{ // Violet
+		    			duration: 1,
+		    			backgroundColor: "#5634e0",
+	    			})
+    			}
+
+    			if($("#side-bar").css("height")>$("#main-option-view").css("height")){
+    				$("#main-option-view").css("height",$("#side-bar").css("height"))
+    			}
+    			else{
+    				$("#side-bar").css("height",$("#main-option-view").css("height"))
+    			}
+    			
+    		},function(){
+				var id = $(this).attr("id")
+
+			if($(window).width()<768){
+				$("#"+id).css("fontSize",14)
+			}
+			else{
+				$("#"+id).css("fontSize",20)
+			}
+
+    			
+    			$(".side-bar-link").css("color","black")
+    		})
+    	})
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>

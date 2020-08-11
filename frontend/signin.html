@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Glaxo Derma</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<script src="js/utils.js"></script>
+	<script src="js/basics.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/basics.css">
+    <link rel="stylesheet" type="text/css" href="css/signin.css">
+    
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript">
+        
+    </script>
+</head>
+<body>
+
+	<div class="container" id="container"> <!--Right Side Bar-->
+    	<!--Top Floting Offer-->
+    	<div> 
+	    	<div id="top-floating-offer">
+	    		<p id="top-floating-offer-text">20% Product Offer</p>
+	    	</div>
+	    	<div id="top-floating-close" style="position: fixed;margin-left: 90vw;z-index: 2;font-size: 30px">
+	    		<i class="fa fa-window-close" aria-hidden="true"></i>
+	    	</div>
+	    </div>
+
+        <div id="header">
+            <div id="header-canvas-container">
+                <canvas id="header-canvas"></canvas>
+                <div id="logo">
+                    <div id="logo-text">GLAXODERMA</div>
+                    <img id="logo-img" src="images/Glaxoderma_logo.png" >
+                    <img id="logo-grad" src="images/gradient.png">
+                </div>
+            </div>
+            <div id="header-bar" class="row">
+                <div class="col-12 col-md-8">
+                    <a href="#" type="button" class="btn nav-btn-ctm">HOME</a>
+                    <a href="#" type="button" class="btn nav-btn-ctm">PRODUCTS</a>
+                    <a href="#" type="button" class="btn nav-btn-ctm">SERVICES</a>
+                    <a href="#" type="button" class="btn nav-btn-ctm">ABOUT US</a>
+                </div>
+                <div class="col-12 col-md-4" >
+                    <a href="#" type="button" class="btn nav-btn-ctm security-info-btn">Login</a>
+                </div>
+            </div>  
+        </div> 
+
+        <!-- Sign in Page View -->
+        <div class="container">
+            <div class="row">
+                <div class="col-12" id="signUpBody">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item ">
+                            <a href="#signUp" class="nav-link" data-toggle="tab">Sign Up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#logIn" class="nav-link active" data-toggle="tab">Log In</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade " id="signUp">
+                            <form id="formBody-signup">  <!--Sign Up Form Body-->
+                                <div class="row">
+                                    <div class="form-group col-md-6 col-12">
+                                        <label for="inputFirstName">First name</label>
+                                        <input type="text" id="inputFirstName" class="form-control" placeholder="Enter Your First Name">
+                                    </div>
+                                    <div class="form-group col-md-6 col-12">
+                                        <label for="inputLastName">Last name</label>
+                                        <input type="text" id="inputLastName" class="form-control" placeholder="Enter Your Last Name">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-6 col-12">
+                                        <label for="inputBirthDate">Death of Birth</label>
+                                        <input type="date" id="inputBirthDate" class="form-control" placeholder="Date of Birth">
+                                    </div>
+                                    <div class="form-group col-md-6 col-12">
+                                        <label for="inputAge">Age</label>
+                                        <input type="number" id="inputAge" class="form-control" placeholder="Age">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputAddress">Address</label>
+                                    <input type="text" class="form-control" id="inputAddress" placeholder="Address">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputPhone">Phone</label>
+                                    <input type="tel" class="form-control" id="inputPhone" placeholder="Phone Number">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputEmail">Email</label>
+                                    <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword">Password</label>
+                                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="form-check-label"><input id="patientCkBox" type="checkbox">Patient</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-check-label"><input id="doctorCkBox" type="checkbox">Doctor</label>
+                                    </div>
+                                </div>
+                                <button type="submit" id="signup" class="btn btn-signin-primary-ctm">Sign Up</button>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade show  active" id="logIn">
+                            <form id="formBody-login">  <!--Log In Form Body-->
+                                <div class="form-group">
+                                    <label for="inputEmail2">Email</label>
+                                    <input type="email" class="form-control" id="inputEmail2" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword2">Password</label>
+                                    <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label class="form-check-label"><input type="checkbox"> Remember me</label>
+                                        </div>
+                                        <div class="col-6" style="text-align: right;">
+                                            <a href="#" ><small>Forgot Password</small></a>
+                                        </div>
+                                    </div>                                 
+                                </div>
+                                <button type="submit" id="login" class="btn btn-signin-primary-ctm">Log in</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+	    
+    	<div id="footer-container">
+    		
+    	</div>
+    </div>    
+
+   
+    
+    <script>
+    	window.addEventListener("load",function(){
+
+            init("container","footer-container","top-floating-offer") //initializing basic elements
+            startFloatingOffer("top-floating-offer","container") // starting float view from basics.js. CSS is in basics.css
+            startHeaderAndCanvasBasic("header-canvas-container","logo","header-canvas") //Starting header and canvas
+
+
+            var xhr = new XMLHttpRequest();
+            
+            $("#login").click(function(){
+                var str =   ''
+                            // '"contact_no":"'+$("#formBody-signup").find("#inputPassword").val()+'",'
+
+                // str = str+ '"date_of_birth": "1999-06-18","role": "patient","address": "Stadium para, Maijdee court","contact_no":"01983495680","age": 21'+'}'
+
+                formData = str
+                print(formData)
+                print("api host:"+api_host)
+                xhr.open("POST", api_host+'/api/add/user', true); //basics.js->api_host
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == XMLHttpRequest.DONE) {
+                        print(xhr.responseText);
+                    }
+                }
+                xhr.send(formData);
+                // print('form data is')
+                // console.log(formData)
+                return false
+            })
+            
+             $("#signup").click(function(){
+                if($("#formBody-signup").find("#patientCkBox").val()=="on"){
+                    var role="patient"
+                }
+                else if($("#formBody-signup").find("#doctorCkBox").val()=="on"){
+                    var role="doctor"
+                }
+                var str =   '{"email":"'+$("#formBody-signup").find("#inputEmail").val()+'",'+
+                            '"date_of_birth":"'+$("#formBody-signup").find("#inputBirthDate").val()+'",'+
+                            '"role":"'+role+'",'+
+                            '"password":"'+$("#formBody-signup").find("#inputPassword").val()+'",'+
+                            '"full_name":"'+$("#formBody-signup").find("#inputFirstName").val()+' '+$("#formBody-signup").find("#inputLastName").val()+'",'+
+                            '"address":"'+$("#formBody-signup").find("#inputAddress").val()+'",'+
+                            '"contact_no":"'+$("#formBody-signup").find("#inputPhone").val()+'",'+
+                            '"age":'+$("#formBody-signup").find("#inputAge").val()+'}'
+                            // '"contact_no":"'+$("#formBody-signup").find("#inputPassword").val()+'",'
+
+                // str = str+ '"date_of_birth": "1999-06-18","role": "patient","address": "Stadium para, Maijdee court","contact_no":"01983495680","age": 21'+'}'
+
+                formData = str
+                print(formData)
+                print("api host:"+api_host)
+                xhr.open("POST", api_host+'/api/add/user', true); //basics.js->api_host
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == XMLHttpRequest.DONE) {
+                        print(xhr.responseText);
+                    }
+                }
+                xhr.send(formData);
+                // print('form data is')
+                // console.log(formData)
+                return false
+            })
+            
+    	})
+    </script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>
