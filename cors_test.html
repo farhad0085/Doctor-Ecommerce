@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cors TEST</title>
+</head>
+<body>
+    Hello World
+
+
+    <script>
+        const request = new XMLHttpRequest();
+        request.open("GET", "http://localhost:5000/api/get/user/2");
+        request.send();
+        request.onload = () => {
+            // const data = JSON.parse(request.responseText);
+            const data = request.responseText;
+            console.log(data);
+
+        }
+    </script>
+
+</body>
+</html>

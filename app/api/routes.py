@@ -153,7 +153,7 @@ def api_add_user():
 
 
 @api.route("/api/get/user/<int:user_id>", methods=["GET"])
-@auth.login_required
+# @auth.login_required
 def api_get_user(user_id):
     """Get a single user info"""
 
