@@ -58,7 +58,11 @@ def api_add_user():
 
     password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
     date_of_birth = data['date_of_birth']
-    role = data['role']
+
+    if 'role' not in data:
+    	role = 'patient'
+    else:
+	    role = data['role']
 
     full_name = data['full_name']
     address = data['address']
@@ -153,7 +157,7 @@ def api_add_user():
 
 
 @api.route("/api/get/user/<int:user_id>", methods=["GET"])
-# @auth.login_required
+@auth.login_required
 def api_get_user(user_id):
     """Get a single user info"""
 

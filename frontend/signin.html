@@ -179,20 +179,34 @@
             })
             
              $("#signup").click(function(){
-                if($("#formBody-signup").find("#patientCkBox").val()=="on"){
-                    var role="patient"
-                }
-                else if($("#formBody-signup").find("#doctorCkBox").val()=="on"){
-                    var role="doctor"
-                }
-                var str =   '{"email":"'+$("#formBody-signup").find("#inputEmail").val()+'",'+
-                            '"date_of_birth":"'+$("#formBody-signup").find("#inputBirthDate").val()+'",'+
-                            '"role":"'+role+'",'+
-                            '"password":"'+$("#formBody-signup").find("#inputPassword").val()+'",'+
-                            '"full_name":"'+$("#formBody-signup").find("#inputFirstName").val()+' '+$("#formBody-signup").find("#inputLastName").val()+'",'+
-                            '"address":"'+$("#formBody-signup").find("#inputAddress").val()+'",'+
-                            '"contact_no":"'+$("#formBody-signup").find("#inputPhone").val()+'",'+
-                            '"age":'+$("#formBody-signup").find("#inputAge").val()+'}'
+                // if($("#formBody-signup").find("#patientCkBox").val()=="on"){
+                //     var role="patient"
+                // }
+                // else if($("#formBody-signup").find("#doctorCkBox").val()=="on"){
+                //     var role="doctor"
+                // }
+
+
+                var str = JSON.stringify({
+                        "email": $('#inputEmail').val(),
+                        "date_of_birth": $('#inputBirthDate').val(),
+                        "password": $('#inputPassword').val(),
+                        "full_name": $('#inputFirstName').val() + ' ' + $('#inputLastName').val(),
+                        "address" : $('#inputAddress').val(),
+                        "contact_no" : $('#inputPhone').val(),
+                        "age" : $('#inputAge').val(),
+                    });
+
+                console.log(str);
+
+                // var str =   '{"email":"'+$("#formBody-signup").find("#inputEmail").val()+'",'+
+                //             '"date_of_birth":"'+$("#formBody-signup").find("#inputBirthDate").val()+'",'+
+                //             '"role":"'+'patient'+'",'+
+                //             '"password":"'+$("#formBody-signup").find("#inputPassword").val()+'",'+
+                //             '"full_name":"'+$("#formBody-signup").find("#inputFirstName").val()+' '+$("#formBody-signup").find("#inputLastName").val()+'",'+
+                //             '"address":"'+$("#formBody-signup").find("#inputAddress").val()+'",'+
+                //             '"contact_no":"'+$("#formBody-signup").find("#inputPhone").val()+'",'+
+                //             '"age":'+$("#formBody-signup").find("#inputAge").val()+'}'
                             // '"contact_no":"'+$("#formBody-signup").find("#inputPassword").val()+'",'
 
                 // str = str+ '"date_of_birth": "1999-06-18","role": "patient","address": "Stadium para, Maijdee court","contact_no":"01983495680","age": 21'+'}'
