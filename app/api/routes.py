@@ -7,6 +7,11 @@ from app.utils import save_picture
 
 api = Blueprint('api', __name__)
 
+"""
+We will use this for check user access, this is really great
+current_user = auth.current_user()
+then we can access current user infos.
+"""
 
 @auth.verify_password
 def verify_password(email_or_token, password):
@@ -20,7 +25,7 @@ def verify_password(email_or_token, password):
             return False
 
     g.user = user
-    return True
+    return user
 
 @auth.error_handler
 def unauthorized():
