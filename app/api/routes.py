@@ -7,6 +7,11 @@ from app.utils import save_picture
 
 api = Blueprint('api', __name__)
 
+"""
+We will use this for check user access, this is really great
+current_user = auth.current_user()
+then we can access current user infos.
+"""
 
 @auth.verify_password
 def verify_password(email_or_token, password):
@@ -20,7 +25,7 @@ def verify_password(email_or_token, password):
             return False
 
     g.user = user
-    return True
+    return user
 
 @auth.error_handler
 def unauthorized():
@@ -30,7 +35,7 @@ def unauthorized():
 @auth.login_required
 def get_auth_token():
     token = g.user.generate_auth_token(3600)
-    return jsonify({'token': token.decode('ascii'), 'duration': 3600})
+    return jsonify({'token': token.decode('ascii'), 'duration': 3600, 'user_id': g.user.id})
 
 
 @api.route("/api/add/user", methods=["POST"])
@@ -58,7 +63,11 @@ def api_add_user():
 
     password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
     date_of_birth = data['date_of_birth']
-    role = data['role']
+
+    if 'role' not in data:
+    	role = 'patient'
+    else:
+	    role = data['role']
 
     full_name = data['full_name']
     address = data['address']
@@ -153,7 +162,7 @@ def api_add_user():
 
 
 @api.route("/api/get/user/<int:user_id>", methods=["GET"])
-# @auth.login_required
+@auth.login_required
 def api_get_user(user_id):
     """Get a single user info"""
 

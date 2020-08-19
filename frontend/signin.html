@@ -107,14 +107,6 @@
                                     <label for="inputPassword">Password</label>
                                     <input type="password" class="form-control" id="inputPassword" placeholder="Password">
                                 </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label class="form-check-label"><input id="patientCkBox" type="checkbox">Patient</label>
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="form-check-label"><input id="doctorCkBox" type="checkbox">Doctor</label>
-                                    </div>
-                                </div>
                                 <button type="submit" id="signup" class="btn btn-signin-primary-ctm">Sign Up</button>
                             </form>
                         </div>
@@ -161,20 +153,29 @@
             startFloatingOffer("top-floating-offer","container") // starting float view from basics.js. CSS is in basics.css
             startHeaderAndCanvasBasic("header-canvas-container","logo","header-canvas") //Starting header and canvas
 
+            var testxhr = new XMLHttpRequest();
+            xhr.open("GET", api_host+'/api/token', true); //basics.js->api_host
+            xhr.setRequestHeader("Authorization", "Basic " + formData)
+            // xhr.setRequestHeader('Content-Type', 'Basic base64 encoded string');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    print(xhr.responseText);
+                }
+            }
+            xhr.send(formData);
 
             var xhr = new XMLHttpRequest();
             
             $("#login").click(function(){
-                var str =   ''
-                            // '"contact_no":"'+$("#formBody-signup").find("#inputPassword").val()+'",'
+                var str = $("#inputEmail2").val()+":"+$("#inputPassword2").val()
 
-                // str = str+ '"date_of_birth": "1999-06-18","role": "patient","address": "Stadium para, Maijdee court","contact_no":"01983495680","age": 21'+'}'
 
-                formData = str
-                print(formData)
+                formData = btoa(str)
+                print("formdata: "+formData)
                 print("api host:"+api_host)
-                xhr.open("POST", api_host+'/api/add/user', true); //basics.js->api_host
-                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.open("GET", api_host+'/api/token', true); //basics.js->api_host
+                xhr.setRequestHeader("Authorization", "Basic " + formData)
+                // xhr.setRequestHeader('Content-Type', 'Basic base64 encoded string');
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == XMLHttpRequest.DONE) {
                         print(xhr.responseText);
@@ -187,20 +188,34 @@
             })
             
              $("#signup").click(function(){
-                if($("#formBody-signup").find("#patientCkBox").val()=="on"){
-                    var role="patient"
-                }
-                else if($("#formBody-signup").find("#doctorCkBox").val()=="on"){
-                    var role="doctor"
-                }
-                var str =   '{"email":"'+$("#formBody-signup").find("#inputEmail").val()+'",'+
-                            '"date_of_birth":"'+$("#formBody-signup").find("#inputBirthDate").val()+'",'+
-                            '"role":"'+role+'",'+
-                            '"password":"'+$("#formBody-signup").find("#inputPassword").val()+'",'+
-                            '"full_name":"'+$("#formBody-signup").find("#inputFirstName").val()+' '+$("#formBody-signup").find("#inputLastName").val()+'",'+
-                            '"address":"'+$("#formBody-signup").find("#inputAddress").val()+'",'+
-                            '"contact_no":"'+$("#formBody-signup").find("#inputPhone").val()+'",'+
-                            '"age":'+$("#formBody-signup").find("#inputAge").val()+'}'
+                // if($("#formBody-signup").find("#patientCkBox").val()=="on"){
+                //     var role="patient"
+                // }
+                // else if($("#formBody-signup").find("#doctorCkBox").val()=="on"){
+                //     var role="doctor"
+                // }
+
+
+                var str = JSON.stringify({
+                        "email": $('#inputEmail').val(),
+                        "date_of_birth": $('#inputBirthDate').val(),
+                        "password": $('#inputPassword').val(),
+                        "full_name": $('#inputFirstName').val() + ' ' + $('#inputLastName').val(),
+                        "address" : $('#inputAddress').val(),
+                        "contact_no" : $('#inputPhone').val(),
+                        "age" : $('#inputAge').val(),
+                    });
+
+                console.log(str);
+
+                // var str =   '{"email":"'+$("#formBody-signup").find("#inputEmail").val()+'",'+
+                //             '"date_of_birth":"'+$("#formBody-signup").find("#inputBirthDate").val()+'",'+
+                //             '"role":"'+'patient'+'",'+
+                //             '"password":"'+$("#formBody-signup").find("#inputPassword").val()+'",'+
+                //             '"full_name":"'+$("#formBody-signup").find("#inputFirstName").val()+' '+$("#formBody-signup").find("#inputLastName").val()+'",'+
+                //             '"address":"'+$("#formBody-signup").find("#inputAddress").val()+'",'+
+                //             '"contact_no":"'+$("#formBody-signup").find("#inputPhone").val()+'",'+
+                //             '"age":'+$("#formBody-signup").find("#inputAge").val()+'}'
                             // '"contact_no":"'+$("#formBody-signup").find("#inputPassword").val()+'",'
 
                 // str = str+ '"date_of_birth": "1999-06-18","role": "patient","address": "Stadium para, Maijdee court","contact_no":"01983495680","age": 21'+'}'
