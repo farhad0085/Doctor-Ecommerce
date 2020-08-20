@@ -11,6 +11,7 @@
 	
 	<script src="js/utils.js"></script>
 	<script src="js/basics.js"></script>
+	<script src="js/api_calls.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/basics.css">
 	<link rel="stylesheet" type="text/css" href="css/homepage.css">
 
@@ -138,10 +139,43 @@
     		init("container","footer-container","top-floating-offer","logo-grad") //initializing basic elements
 
             startFloatingOffer("top-floating-offer","container") // starting float view from basics.js. CSS is in basics.css
-            startHeaderAndCanvasBasic("header-canvas-container","logo","header-canvas","header-bar") //Starting header and canvas
+            startHeaderAndCanvasBasic("header-canvas-container","logo","header-canvas","header-bar")  //Starting header and canvas
 
             setUpMainView()
             
+
+            getuser(data_handler)
+
+            function data_handler(jData){
+            	setTimeout(function(){
+            			loop_till(jData)}
+            			,50)
+
+            	// loop_till(jData)
+            }
+
+            function loop_till(jData){
+            	
+            	tag("jData",jData[1]["message"])
+            	if($("#login-btn").get()[0]){
+            		if(jData[1]["message"]=="success"){
+	            		$("#login-btn").html("Logout")
+	            		$("#login-btn").attr("href","#")
+	            		$("#login-btn").click(function(){
+	            			localStorage.removeItem(STORAGE_TOKEN)
+	            			localStorage.removeItem(STORAGE_USER_ID)
+	            			window.open(web_host+"/index.html","_self")
+	            			return false
+	            		})
+	            	}
+            	}
+            	else{
+            		tag("looping...")
+            		setTimeout(function(){
+            			loop_till(jData)}
+            			,50)
+            	}
+            }
             // $("#header-bar").load("templates/parts.html #nav-bar-items-a-href-links>#col1")
             
             // $("#header-bar").append($("#dummy").load("templates/parts.html #nav-bar-items-a-href-links>#col2"))

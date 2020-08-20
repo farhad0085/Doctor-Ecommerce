@@ -1,5 +1,5 @@
 var api_host = "http://127.0.0.1:5000"
-
+var web_host = "http://localhost/GDApp/frontend"
 function init(container_id,footer_container_id,floating_view_id){
 	// Loading Footer
 	$("#"+footer_container_id).load("templates/footer_main.html #footer-container")
@@ -47,10 +47,14 @@ function startFloatingOffer(floating_view_id, following_container_id){
 	floatGsap()
 }
 
-function startHeaderAndCanvasBasic(header_canvas_container_id,logo_id,header_canvas_id){
+function startHeaderAndCanvasBasic(header_canvas_container_id,logo_id,header_canvas_id,header_bar_id){
 	//setting up logo
 	$("#"+logo_id).css("top",0+"px")
     $("#"+logo_id).css("min-height",$("#"+header_canvas_id).css("height"))
+    $("#"+header_bar_id).load("templates/parts.html #nav-bar-items-a-href-links",function(){
+        $("#"+header_bar_id).html($("#nav-bar-items-a-href-links").html())
+    })
+    
     $("#"+header_canvas_container_id).css("height",$("#"+header_canvas_id).css("height"))
     // console.log($("#"+header_canvas_id).css("height"))
     //setting up canvas
@@ -109,4 +113,12 @@ function startHeaderAndCanvasBasic(header_canvas_container_id,logo_id,header_can
         window.requestAnimationFrame(updateCanvas)
     }
     window.requestAnimationFrame(updateCanvas)
+}
+
+function tag(...args){
+    var st=args[0]+"---: "
+    for(var i=1;i<args.length;i++){
+        st = st + args[i] + " "
+    }
+    console.log(st)
 }
