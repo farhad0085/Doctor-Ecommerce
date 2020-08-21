@@ -9,6 +9,7 @@
 	
 	<script src="js/utils.js"></script>
 	<script src="js/basics.js"></script>
+	<script src="js/api_calls.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/basics.css">
     <link rel="stylesheet" type="text/css" href="css/signin.css">
     
@@ -151,18 +152,8 @@
 
             init("container","footer-container","top-floating-offer") //initializing basic elements
             startFloatingOffer("top-floating-offer","container") // starting float view from basics.js. CSS is in basics.css
-            startHeaderAndCanvasBasic("header-canvas-container","logo","header-canvas") //Starting header and canvas
+            startHeaderAndCanvasBasic("header-canvas-container","logo","header-canvas","header-bar") //Starting header and canvas
 
-            var testxhr = new XMLHttpRequest();
-            xhr.open("GET", api_host+'/api/token', true); //basics.js->api_host
-            xhr.setRequestHeader("Authorization", "Basic " + formData)
-            // xhr.setRequestHeader('Content-Type', 'Basic base64 encoded string');
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == XMLHttpRequest.DONE) {
-                    print(xhr.responseText);
-                }
-            }
-            xhr.send(formData);
 
             var xhr = new XMLHttpRequest();
             
@@ -178,10 +169,19 @@
                 // xhr.setRequestHeader('Content-Type', 'Basic base64 encoded string');
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == XMLHttpRequest.DONE) {
-                        print(xhr.responseText);
+                    	// print(xhr.responseText)
+                    	var jData = JSON.parse(xhr.responseText)
+                    	// print(jData)
+                        tag("token",xhr.responseText);
+                        localStorage.setItem(STORAGE_TOKEN, jData["token"]);
+                        localStorage.setItem(STORAGE_USER_ID, jData["user_id"]);
+                        if(jData["token"]!=""){
+                        	window.open(web_host+"/index.html","_self")
+                        }
+                        
                     }
                 }
-                xhr.send(formData);
+                xhr.send();
                 // print('form data is')
                 // console.log(formData)
                 return false
