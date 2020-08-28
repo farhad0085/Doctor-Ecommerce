@@ -2,7 +2,9 @@
 <html>
 <head>
 	<title>Glaxo Derma</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="google" content="notranslate" />
+	<meta charset="UTF-8">
+	<!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> -->
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script>
 
@@ -221,18 +223,14 @@
     	// window.addEventListener("load",function(){
 		$(document).ready(function() {
     		init("container","footer-container","top-floating-offer","logo-grad") //initializing basic elements
+    		startHeaderAndCanvasBasic("header-canvas-container","logo","header-canvas","header-bar")  //Starting header and canvas
 
             // startFloatingOffer("top-floating-offer","container") // starting float view from basics.js. CSS is in basics.css
             // setInterval(main_loop,500)
             setupNotification("top-notification")
             setTimeout(function(){
             	topNotificationHandler("top-notification")
-            	},4*1000)
-            
-
-            startHeaderAndCanvasBasic("header-canvas-container","logo","header-canvas","header-bar")  //Starting header and canvas
-
-            setUpMainView()
+            	},4*1000)           
             
             navbar_lang_processes_lt("index")
             // Getting the current user data
@@ -244,6 +242,7 @@
             			,50)
             }
 
+           setUpMainView()
            
             // $("#header-bar").load("templates/parts.html #nav-bar-items-a-href-links>#col1")
             

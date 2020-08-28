@@ -5,6 +5,7 @@ function getuser(data_handler){
     var xhr = new XMLHttpRequest();
     tag("Returning",localStorage.getItem(STORAGE_TOKEN))
     if(localStorage.getItem(STORAGE_TOKEN)==null){
+        data_handler(null)
         return
     }
     var str = localStorage.getItem(STORAGE_TOKEN)+":"+"null";

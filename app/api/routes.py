@@ -402,10 +402,12 @@ def api_add_product():
                         description=description,
                         price=price,
                         quantity=quantity)
+        
 
         db.session.add(product)
         db.session.commit()
-
+        
+        
         for picture in pictures:
             imgdata = base64.b64decode(picture.split(',')[1])
             filename = save_picture(img=imgdata, folder="product_picture")

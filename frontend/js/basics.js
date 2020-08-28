@@ -180,18 +180,25 @@ function lang_handle(){
 function navbar_login_processes_lt(jData,current_page){
                 
     tag("jData",jData[1]["message"])
+    tag("jData",jData[0]["role"])
     if($("#login-btn").get()[0]){ //loop until log-in button is ready through jquery.load()
         
         if(jData[1]["message"]=="success"){
             $("#login-btn").find("#login-text").css("display","none")
             $("#login-btn").find("#logout-text").css("display","block")
             $("#login-btn").attr("href","#")
+
             $("#login-btn").click(function(){
                 localStorage.removeItem(STORAGE_TOKEN)
                 localStorage.removeItem(STORAGE_USER_ID)
                 window.open(web_host+"/"+current_page+".html","_self")
                 return false
             })
+
+            // if(jData[0]["role"]=="super_admin"){
+            //     tag("super","should work")
+            //     $("#admin-panel-btn").css("display","inline")
+            // }
         }
     }
     else{
