@@ -7,7 +7,8 @@ from flask_cors import CORS
 from flask_caching import Cache
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+# cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app)
 
 app.config.from_pyfile('config.cfg')
 

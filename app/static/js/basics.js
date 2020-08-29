@@ -5,7 +5,9 @@ var STORAGE_LANG = "gd_language"
 
 function init(container_id,footer_container_id,floating_view_id){
 	// Loading Footer
-	$("#"+footer_container_id).load("templates/footer_main.html #footer-container")
+	// $("#"+footer_container_id).load("templates/footer_main.html #footer-container")
+    console.log("{{ url_for('static', filename='css/homepage.css') }}")
+    $("#"+footer_container_id).load("{{ url_for('static', filename='templates/footer_main.html') }} #footer-container")
 	// setting up container
     try{
         $("#"+container_id).css("top",document.getElementById(floating_view_id).getBoundingClientRect().bottom+"px");
@@ -202,7 +204,6 @@ function navbar_login_processes_lt(jData,current_page){
         }
     }
     else{
-        tag("looping...")
         setTimeout(function(){
             navbar_login_processes_lt(jData,current_page)}
             ,50)
@@ -231,7 +232,7 @@ function navbar_lang_processes_lt(current_page){
         
     }
     else{
-        tag("looping...")
+        // tag("looping...")
         setTimeout(function(){
             navbar_lang_processes_lt(current_page)}
             ,50)

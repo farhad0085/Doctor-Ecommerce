@@ -1,5 +1,354 @@
 {% extends "layouts/base.html" %}
+
 {% block title %} Home {% endblock %}
-{% block body %}
-	<p>Home found</p>
+
+{% block head %}
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/homepage.css') }}">
 {% endblock %}
+
+
+{% block body %}
+	 <div class="container debug-shadow" id="container"> <!--Right Side Bar-->
+    	<!--Top Floting Offer-->
+    	<!-- <div> 
+	    	<div id="top-floating-offer">
+	    		<p>20% Product Offer</p>
+	    	</div>
+	    	<div id="top-floating-close" style="position: fixed;margin-left: 90vw;z-index: 2;font-size: 30px">
+	    		<i class="fa fa-window-close" aria-hidden="true"></i>
+	    	</div>
+	    </div> -->
+	    <div id="top-notification">
+	    	<div id="top-notification-close" style="float: right; padding-right: 10px"><i class="fa fa-window-close"></i></div>
+	    	<div id="top-notification-data">স্বাগতম গ্লাক্সোডার্মাতে!!</div>
+	    </div>
+
+	    <div id="header">
+            <div id="header-canvas-container">
+                <canvas id="header-canvas"></canvas>
+                <div id="logo">
+                    <div id="logo-text">GLAXODERMA</div>
+                    <img id="logo-img" src="{{ url_for('static',filename='images/logo_resizeimage.png') }}" >
+                    <img id="logo-grad" src="{{ url_for('static',filename='images/gradient.png') }}">
+                </div>
+            </div>
+            <div id="header-bar" class="row"> <!-- Loading from template/parts.html -->
+            </div>  
+            
+        </div> 
+
+	    <!-- <div id="logo-place" >
+	    	<img id="logo-img" src="images/WelcometoGLAXODERMA.svg" style="align-self: center;">
+		</div> -->
+ 		<div id="main-view" >
+	    	<div class="row" id="option-view-body">
+	    		<div class="col-9">
+	    			<div id="main-option-view">
+	    				Choose what you want to do..
+	    			</div>
+	    		</div>
+	    		<div class="col-3" id="side-bar-handler">
+	    			<div id="side-bar">
+	    				<h2>
+	    					<div class="english-static">Menu</div>
+	                		<div class="bangla-static">মেনু</div>
+	                	</h2>
+		    			<a href="#" id="PRODUCTS" class="side-bar-link">
+			    			<div class="english-static">PRODUCTS</div>
+	                		<div class="bangla-static">পন্য</div>
+		    			</a><br>
+		    			<a href="#" id="SERIVCES" class="side-bar-link">
+		    				<div class="english-static">SERVICES</div>
+                			<div class="bangla-static">সেবা</div>
+		    			</a><br>
+		    			<a href="#" id="BLOG" class="side-bar-link">
+		    				<div class="english-static">BLOG</div>
+                			<div class="bangla-static">ব্লগ</div>
+		    			</a><br>
+		    			<a href="#" id="ARCHIEVE" class="side-bar-link">
+		    				<div class="english-static">ARCHIEVE</div>
+                			<div class="bangla-static">তথ্য সমগ্র</div>
+            			</a><br>
+		    			<a href="#" id="ABOUTUS" class="side-bar-link">
+		    				<div class="english-static">ABOUT US</div>
+                			<div class="bangla-static">আমাদের সম্পর্কে</div>
+            			</a><br>
+		    			<a href="#" id="CAREER" class="side-bar-link">
+		    				<div class="english-static">CAREER</div>
+               				<div class="bangla-static">ক্যারিয়ার</div></a><br>
+		    			<a href="#" id="CONTACT" class="side-bar-link">
+		    				<div class="english-static">CONTACT</div>
+               				<div class="bangla-static">যোগাযোগ</div>
+            			</a><br>
+	    			</div>
+	    		</div>
+	    	</div>
+
+	    	<!-- <div id="readers-choice" class="material-container-ctm">
+	    		<h2 style="text-align: center; color: black;padding: 20px">READERS CHOICE</h2>
+	    		<div class="main-events"></div>
+	    	</div> -->
+	    	<div id="recent-events" class="material-container-ctm">
+	    		<h2 style="text-align: center; color: black;padding: 20px">
+	    			<div class="english-static">RECENT EVENTS & ACTIVITIES</div>
+               		<div class="bangla-static">সাম্প্রতিক ঘটনা ও ক্রিয়াকলাপ</div>
+	    		</h2>
+	    		<div class="main-events"></div>
+	    	</div>
+	    	<div id="our-brands" class="material-container-ctm">
+	    		<h2 style="text-align: center; color: black;padding: 20px">
+	    			<div class="english-static">OUR BRANDS</div>
+               		<div class="bangla-static">আমাদের ব্র্যান্ড</div>
+	    		</h2>
+	    		<div class="main-events"></div>
+	    	</div>
+	    	<div id="our-partners" class="material-container-ctm">
+	    		<h2 style="text-align: center;color: black;padding: 20px">
+	    			<div class="english-static">OUR PARTNERS</div>
+               		<div class="bangla-static">আমাদের অংশীদার</div>
+	    		</h2>
+	    		<div class="main-events"></div>
+	    	</div>
+	    	<div id="our-acridition" class="material-container-ctm">
+	    		<h2 style="text-align: center;color: black;padding: 20px">
+	    			<div class="english-static">OUR ACRIDITIONS & ACHIEVEMENTS</div>
+               		<div class="bangla-static">আমাদের স্বীকৃতি এবং অর্জনসমূহ</div>
+	    		</h2>
+	    		<div class="main-events"></div>
+	    	</div>
+	    	<div id="testimonials" class="material-container-ctm">
+	    		<h2 style="text-align: center; color: black;padding: 20px">
+	    			<div class="english-static">TESTIMONIAL</div>
+               		<div class="bangla-static">প্রশংসাপত্র</div>
+	    		</h2>
+	    		<div class="main-events"></div>
+	    	</div>
+	    </div>
+
+    	<div id="footer-container">
+    		
+    	</div>
+        <div id="dummy" style="display: none;"></div>
+
+    </div>
+
+
+    
+
+   	<!-- Container to show for hover in main option view-->
+	<div id="products-hover-view" style="display: none;">
+		<div class="english-static">
+			WANT TO VISIT<br>
+			OUR E-STORE TO <br>
+			<b>FIND OUT PRODUCTS,<br>SKINCARE SOLUTIONS<br>
+		</div>
+		<div class="bangla-static">
+			ভিজিট করুন <br>
+			আমাদের ই স্টোর <br>
+			<b> পণ্যগুলি, স্কিন কেয়ার সলিউশনস সন্ধান করুন <br>
+		</div>
+		<br>
+		<button type="button" class="btn btn-ctm">
+			<div class="english-static">SHOP NOW</div>
+			<div class="bangla-static">এখনই কিনুন</div>
+		</button>
+		
+
+	</div>
+
+	<div id="blog-hover-view" style="display: none;">
+		<div class="english-static">
+			KNOW ABOUT<br>
+			<b>SKINCARE<br>PROBLEMS<br>& SOLUTIONS<br>
+		</div>
+		<div class="bangla-static">		
+			স্কিনকেয়ার <br> সমস্যাগুলি <br> ও সমাধানগুলি <br>
+			সম্পর্কে জানুন <br>
+		</div>
+		<br>
+		<button type="button" class="btn btn-ctm">
+			<div class="english-static">READ MORE</div>
+			<div class="bangla-static">আরও পড়ুন</div>
+		</button>
+
+	</div>
+
+	<div id="services-hover-view" style="display: none;">
+		
+
+		<div class="english-static">
+			LOOKING FOR<br>
+			CONSULTING WITH<br>
+			<b>DERMATOLOGIST &<br>EXPERT PROFESSIONALS<br>
+		</div>
+		<div class="bangla-static">		
+			পরামর্শের জন্য 
+			<b> ডার্মাটোলজিস্ট এবং <br> বিশেষজ্ঞ পেশাদার <br>
+			খুজুন
+			<br>
+		</div>
+		<br>
+		<button type="button" class="btn btn-ctm">
+			<div class="english-static">FIND MORE</div>
+			<div class="bangla-static">আরও পড়ুন</div>
+		</button>
+
+
+	</div>
+	
+    
+    <script>
+
+    	// window.addEventListener("load",function(){
+		$(document).ready(function() {
+			
+
+    		init("container","footer-container","top-floating-offer","logo-grad") //initializing basic elements
+    		startHeaderAndCanvasBasic("header-canvas-container","logo","header-canvas","header-bar")  //Starting header and canvas
+
+            // startFloatingOffer("top-floating-offer","container") // starting float view from basics.js. CSS is in basics.css
+            // setInterval(main_loop,500)
+            setupNotification("top-notification")
+            setTimeout(function(){
+            	topNotificationHandler("top-notification")
+            	},4*1000)           
+            
+            navbar_lang_processes_lt("index")
+            // Getting the current user data
+            getuser(data_handler)
+
+            function data_handler(jData){
+            	setTimeout(function(){
+            			navbar_login_processes_lt(jData,"index")}
+            			,50)
+            }
+
+           setUpMainView()
+           
+            // $("#header-bar").load("templates/parts.html #nav-bar-items-a-href-links>#col1")
+            
+            // $("#header-bar").append($("#dummy").load("templates/parts.html #nav-bar-items-a-href-links>#col2"))
+            // $("#dummy").ready( function() {
+            //     print($("#dummy").html())
+            // });
+            
+    		// $("#side-bar,#main-option-view").css("height",$("#main-option-view").css("height"))
+    		//Main Option View
+    		$("#main-option-view").css("min-height",$("#side-bar").css("height"))
+
+    		// Handle when screen width < 786
+    		if($(window).width()<768){
+				$("#main-option-view").css("paddingLeft","5vw")
+				$(".side-bar-link").css("fontSize","14px")
+			}
+			else{
+				$("#main-option-view").css("paddingLeft","10vw")
+				$(".side-bar-link").css("fontSize","20px")
+			}
+    		
+			var defBackground = $("#side-bar").css("backgroundColor")
+    		$("#side-bar,#main-option-view").hover(function(){
+    			// print($("#side-bar").css("backgroundColor"))
+    			if($("#side-bar").css("backgroundColor")==defBackground){ //checking if white
+    				gsap.to("#main-option-view,#side-bar",{ // Paste
+		    			duration: 1,
+		    			backgroundColor: "#8221eb",
+	    			})
+	    			$("#main-option-view").css("color","white")
+    			}
+    		},function(){
+    			// $("#main-option-view").css("backgroundColor","white").css("color","black")
+    			// $("#side-bar").css("backgroundColor","white")
+    		})
+
+    		$(".side-bar-link").hover(function(){
+    			var id = $(this).attr("id")
+    			// console.log($("#main-option-view").css("height"))
+    			console.log($(window).width())
+    			if($(window).width()<768){
+    				$("#"+id).css("fontSize",20)
+    			}
+    			else{
+    				$("#"+id).css("fontSize",30)
+    			}
+
+    			$(".side-bar-link").css("color","black")
+
+    			if(id=="PRODUCTS"){
+    				gsap.to("#main-option-view,#side-bar",{
+		    			duration: 1,
+		    			backgroundColor: "#8221eb",
+	    			})
+    				$("#main-option-view").css("color","white")
+	    			$("#main-option-view").html($("#products-hover-view").html())
+    			}
+    			else if(id=="SERIVCES"){
+    				gsap.to("#main-option-view,#side-bar",{
+		    			duration: 1,
+		    			backgroundColor: "#f76125",
+	    			})
+	    			$("#main-option-view").css("color","white")
+	    			$("#main-option-view").html($("#services-hover-view").html())
+    			}
+    			else if(id=="BLOG"){
+    				gsap.to("#main-option-view,#side-bar",{ // Yellow
+		    			duration: 1,
+		    			backgroundColor: "#afeb38",
+	    			})
+    				$("#main-option-view").css("color","black")
+	    			$("#main-option-view").html($("#blog-hover-view").html())
+    			}
+    			else if(id=="ARCHIEVE"){
+    				gsap.to("#main-option-view,#side-bar",{ // Green
+		    			duration: 1,
+		    			backgroundColor: "#87f731",
+	    			})
+    			}
+    			else if(id=="ABOUTUS"){
+    				gsap.to("#main-option-view,#side-bar",{ // Paste
+		    			duration: 1,
+		    			backgroundColor: "#30e357",
+	    			})
+    			}
+    			else if(id=="CAREER"){
+    				gsap.to("#main-option-view,#side-bar",{ // Blue
+		    			duration: 1,
+		    			backgroundColor: "#3086e3",
+	    			})
+    			}
+    			else if(id=="CONTACT"){
+    				gsap.to("#main-option-view,#side-bar",{ // Violet
+		    			duration: 1,
+		    			backgroundColor: "#5634e0",
+	    			})
+    			}
+
+    			if($("#side-bar").css("height")>$("#main-option-view").css("height")){
+    				$("#main-option-view").css("height",$("#side-bar").css("height"))
+    			}
+    			else{
+    				$("#side-bar").css("height",$("#main-option-view").css("height"))
+    			}
+    			
+    		},function(){
+				var id = $(this).attr("id")
+
+			if($(window).width()<768){
+				$("#"+id).css("fontSize",14)
+			}
+			else{
+				$("#"+id).css("fontSize",20)
+			}
+
+    			
+    			$(".side-bar-link").css("color","black")
+    		})
+
+    		function setUpMainView(){
+    		    $("#main-option-view").css("color","white")
+	    		$("#main-option-view").html($("#products-hover-view").html())
+    		}
+    	})
+    </script>
+
+{% endblock %} <!--end of body-->
