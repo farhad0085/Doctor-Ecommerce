@@ -1,0 +1,168 @@
+{% extends "layouts/base.html" %}
+
+{% block header_scripts %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/signin.css') }}">
+{% endblock header_scripts %}
+
+{% block content %}
+<!-- Sign in Page View -->
+<div class="container">
+    <div class="row">
+        <div class="col-12" id="signUpBody">
+            <ul class="nav nav-tabs">
+                <li class="nav-item ">
+                    <a href="#signUp" class="nav-link" data-toggle="tab">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#logIn" class="nav-link active" data-toggle="tab">Log In</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade " id="signUp">
+                    <form id="formBody-signup">
+                        <!--Sign Up Form Body-->
+                        <div class="row">
+                            <div class="form-group col-md-6 col-12">
+                                <label for="inputFirstName">First name</label>
+                                <input type="text" id="inputFirstName" class="form-control"
+                                    placeholder="Enter Your First Name">
+                            </div>
+                            <div class="form-group col-md-6 col-12">
+                                <label for="inputLastName">Last name</label>
+                                <input type="text" id="inputLastName" class="form-control"
+                                    placeholder="Enter Your Last Name">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6 col-12">
+                                <label for="inputBirthDate">Death of Birth</label>
+                                <input type="date" id="inputBirthDate" class="form-control" placeholder="Date of Birth">
+                            </div>
+                            <div class="form-group col-md-6 col-12">
+                                <label for="inputAge">Age</label>
+                                <input type="number" id="inputAge" class="form-control" placeholder="Age">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputAddress">Address</label>
+                            <input type="text" class="form-control" id="inputAddress" placeholder="Address">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputPhone">Phone</label>
+                            <input type="tel" class="form-control" id="inputPhone" placeholder="Phone Number">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail">Email</label>
+                            <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword">Password</label>
+                            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                        </div>
+                        <button type="submit" id="signup" class="btn btn-signin-primary-ctm">Sign Up</button>
+                    </form>
+                </div>
+                <div class="tab-pane fade show  active" id="logIn">
+                    <form id="formBody-login">
+                        <!--Log In Form Body-->
+                        <div class="form-group">
+                            <label for="inputEmail2">Email</label>
+                            <input type="email" class="form-control" id="inputEmail2" placeholder="Email">
+                        </div>
+                        <div class="small" style="color:red; display: none;" id="emailNotFoundMessage">User with that email not found!</div>
+                        <div class="form-group">
+                            <label for="inputPassword2">Password</label>
+                            <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
+                        </div>
+                        <div class="small" style="color:red; display: none;" id="passwordNotMatchMessage">Incorrect Password!</div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="form-check-label"><input type="checkbox" id="rememberCheck"> Remember me</label>
+                                </div>
+                                <div class="col-6" style="text-align: right;">
+                                    <a href="#"><small>Forgot Password</small></a>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" id="login" class="btn btn-signin-primary-ctm">Log in</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block footer_scripts %}
+    
+<script>
+    window.addEventListener("load", function () {
+
+        init("container", "footer-container", "top-floating-offer") //initializing basic elements
+        startFloatingOffer("top-floating-offer", "container") // starting float view from basics.js. CSS is in basics.css
+        startHeaderAndCanvasBasic("header-canvas-container", "logo", "header-canvas", "header-bar") //Starting header and canvas
+
+
+        var xhr = new XMLHttpRequest();
+
+        $("#login").click(function (e) {
+            e.preventDefault();
+            xhr.open("POST", '/api/user/login');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function () {
+                const responseData = JSON.parse(xhr.responseText)
+                if (xhr.status == 200){
+                    window.open("{{ url_for('web.home') }}", "_self")
+                }
+                else if(xhr.status == 404){
+                    $("#passwordNotMatchMessage").hide();
+                    $("#emailNotFoundMessage").show();
+                }
+                else {
+                    $("#emailNotFoundMessage").hide();
+                    $("#passwordNotMatchMessage").show();
+                }
+               
+            }
+
+            const postData = JSON.stringify({
+                "email": $("#inputEmail2").val(),
+                "password": $("#inputPassword2").val(),
+                "remember": $("#rememberCheck").is(':checked')
+            })
+            console.log(postData);
+            xhr.send(postData);
+            return false
+        })
+
+        $("#signup").click(function () {
+
+            var str = JSON.stringify({
+                "email": $('#inputEmail').val(),
+                "date_of_birth": $('#inputBirthDate').val(),
+                "password": $('#inputPassword').val(),
+                "full_name": $('#inputFirstName').val() + ' ' + $('#inputLastName').val(),
+                "address": $('#inputAddress').val(),
+                "contact_no": $('#inputPhone').val(),
+                "age": $('#inputAge').val(),
+            });
+
+            xhr.open("POST", api_host + '/api/add/user', true); //basics.js->api_host
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    print(xhr.responseText);
+                }
+            }
+            xhr.send(formData);
+            return false
+        })
+
+    })
+</script>
+{% endblock footer_scripts %}
