@@ -67,7 +67,11 @@
 					<a href="#" type="button" class="btn nav-btn-ctm">ABOUT US</a>
 				</div>
 				<div class="col-12 col-md-4">
-					<a href="#" type="button" class="btn nav-btn-ctm security-info-btn">Login</a>
+					{% if current_user.is_authenticated %}
+						<a href="{{ url_for('web.logout') }}" type="button" class="btn nav-btn-ctm security-info-btn">Logout</a>
+					{% else %}
+						<a href="{{ url_for('web.login') }}" type="button" class="btn nav-btn-ctm security-info-btn">Login</a>
+					{% endif %}
 				</div>
 			</div>
 		</div>

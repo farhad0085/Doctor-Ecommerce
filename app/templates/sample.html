@@ -1,13 +1,11 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Home {% endblock %}
-
-{% block head %}
+{% block header_scripts %}
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/homepage.css') }}">
-{% endblock %}
+{% endblock header_scripts %}
 
 
-{% block body %}
+{% block content %}
 	 <div class="container debug-shadow" id="container"> <!--Right Side Bar-->
     	<!--Top Floting Offer-->
     	<!-- <div> 
@@ -196,158 +194,161 @@
 	</div>
 	
     
-    <script>
+    
 
-    	// window.addEventListener("load",function(){
-		$(document).ready(function() {
-			
+{% endblock content %} <!--end of body-->
+{% block footer_scripts %}
+<script>
 
-    		init("container","footer-container","top-floating-offer","logo-grad") //initializing basic elements
-    		startHeaderAndCanvasBasic("header-canvas-container","logo","header-canvas","header-bar")  //Starting header and canvas
+	// window.addEventListener("load",function(){
+	$(document).ready(function() {
+		
 
-            // startFloatingOffer("top-floating-offer","container") // starting float view from basics.js. CSS is in basics.css
-            // setInterval(main_loop,500)
-            setupNotification("top-notification")
-            setTimeout(function(){
-            	topNotificationHandler("top-notification")
-            	},4*1000)           
-            
-            navbar_lang_processes_lt("index")
-            // Getting the current user data
-            getuser(data_handler)
+		init("container","footer-container","top-floating-offer","logo-grad") //initializing basic elements
+		startHeaderAndCanvasBasic("header-canvas-container","logo","header-canvas","header-bar")  //Starting header and canvas
 
-            function data_handler(jData){
-            	setTimeout(function(){
-            			navbar_login_processes_lt(jData,"index")}
-            			,50)
-            }
+		// startFloatingOffer("top-floating-offer","container") // starting float view from basics.js. CSS is in basics.css
+		// setInterval(main_loop,500)
+		setupNotification("top-notification")
+		setTimeout(function(){
+			topNotificationHandler("top-notification")
+			},4*1000)           
+		
+		navbar_lang_processes_lt("index")
+		// Getting the current user data
+		getuser(data_handler)
 
-           setUpMainView()
-           
-            // $("#header-bar").load("templates/parts.html #nav-bar-items-a-href-links>#col1")
-            
-            // $("#header-bar").append($("#dummy").load("templates/parts.html #nav-bar-items-a-href-links>#col2"))
-            // $("#dummy").ready( function() {
-            //     print($("#dummy").html())
-            // });
-            
-    		// $("#side-bar,#main-option-view").css("height",$("#main-option-view").css("height"))
-    		//Main Option View
-    		$("#main-option-view").css("min-height",$("#side-bar").css("height"))
+		function data_handler(jData){
+			setTimeout(function(){
+					navbar_login_processes_lt(jData,"index")}
+					,50)
+		}
 
-    		// Handle when screen width < 786
-    		if($(window).width()<768){
-				$("#main-option-view").css("paddingLeft","5vw")
-				$(".side-bar-link").css("fontSize","14px")
+	   setUpMainView()
+	   
+		// $("#header-bar").load("templates/parts.html #nav-bar-items-a-href-links>#col1")
+		
+		// $("#header-bar").append($("#dummy").load("templates/parts.html #nav-bar-items-a-href-links>#col2"))
+		// $("#dummy").ready( function() {
+		//     print($("#dummy").html())
+		// });
+		
+		// $("#side-bar,#main-option-view").css("height",$("#main-option-view").css("height"))
+		//Main Option View
+		$("#main-option-view").css("min-height",$("#side-bar").css("height"))
+
+		// Handle when screen width < 786
+		if($(window).width()<768){
+			$("#main-option-view").css("paddingLeft","5vw")
+			$(".side-bar-link").css("fontSize","14px")
+		}
+		else{
+			$("#main-option-view").css("paddingLeft","10vw")
+			$(".side-bar-link").css("fontSize","20px")
+		}
+		
+		var defBackground = $("#side-bar").css("backgroundColor")
+		$("#side-bar,#main-option-view").hover(function(){
+			// print($("#side-bar").css("backgroundColor"))
+			if($("#side-bar").css("backgroundColor")==defBackground){ //checking if white
+				gsap.to("#main-option-view,#side-bar",{ // Paste
+					duration: 1,
+					backgroundColor: "#8221eb",
+				})
+				$("#main-option-view").css("color","white")
 			}
-			else{
-				$("#main-option-view").css("paddingLeft","10vw")
-				$(".side-bar-link").css("fontSize","20px")
-			}
-    		
-			var defBackground = $("#side-bar").css("backgroundColor")
-    		$("#side-bar,#main-option-view").hover(function(){
-    			// print($("#side-bar").css("backgroundColor"))
-    			if($("#side-bar").css("backgroundColor")==defBackground){ //checking if white
-    				gsap.to("#main-option-view,#side-bar",{ // Paste
-		    			duration: 1,
-		    			backgroundColor: "#8221eb",
-	    			})
-	    			$("#main-option-view").css("color","white")
-    			}
-    		},function(){
-    			// $("#main-option-view").css("backgroundColor","white").css("color","black")
-    			// $("#side-bar").css("backgroundColor","white")
-    		})
+		},function(){
+			// $("#main-option-view").css("backgroundColor","white").css("color","black")
+			// $("#side-bar").css("backgroundColor","white")
+		})
 
-    		$(".side-bar-link").hover(function(){
-    			var id = $(this).attr("id")
-    			// console.log($("#main-option-view").css("height"))
-    			console.log($(window).width())
-    			if($(window).width()<768){
-    				$("#"+id).css("fontSize",20)
-    			}
-    			else{
-    				$("#"+id).css("fontSize",30)
-    			}
-
-    			$(".side-bar-link").css("color","black")
-
-    			if(id=="PRODUCTS"){
-    				gsap.to("#main-option-view,#side-bar",{
-		    			duration: 1,
-		    			backgroundColor: "#8221eb",
-	    			})
-    				$("#main-option-view").css("color","white")
-	    			$("#main-option-view").html($("#products-hover-view").html())
-    			}
-    			else if(id=="SERIVCES"){
-    				gsap.to("#main-option-view,#side-bar",{
-		    			duration: 1,
-		    			backgroundColor: "#f76125",
-	    			})
-	    			$("#main-option-view").css("color","white")
-	    			$("#main-option-view").html($("#services-hover-view").html())
-    			}
-    			else if(id=="BLOG"){
-    				gsap.to("#main-option-view,#side-bar",{ // Yellow
-		    			duration: 1,
-		    			backgroundColor: "#afeb38",
-	    			})
-    				$("#main-option-view").css("color","black")
-	    			$("#main-option-view").html($("#blog-hover-view").html())
-    			}
-    			else if(id=="ARCHIEVE"){
-    				gsap.to("#main-option-view,#side-bar",{ // Green
-		    			duration: 1,
-		    			backgroundColor: "#87f731",
-	    			})
-    			}
-    			else if(id=="ABOUTUS"){
-    				gsap.to("#main-option-view,#side-bar",{ // Paste
-		    			duration: 1,
-		    			backgroundColor: "#30e357",
-	    			})
-    			}
-    			else if(id=="CAREER"){
-    				gsap.to("#main-option-view,#side-bar",{ // Blue
-		    			duration: 1,
-		    			backgroundColor: "#3086e3",
-	    			})
-    			}
-    			else if(id=="CONTACT"){
-    				gsap.to("#main-option-view,#side-bar",{ // Violet
-		    			duration: 1,
-		    			backgroundColor: "#5634e0",
-	    			})
-    			}
-
-    			if($("#side-bar").css("height")>$("#main-option-view").css("height")){
-    				$("#main-option-view").css("height",$("#side-bar").css("height"))
-    			}
-    			else{
-    				$("#side-bar").css("height",$("#main-option-view").css("height"))
-    			}
-    			
-    		},function(){
-				var id = $(this).attr("id")
-
+		$(".side-bar-link").hover(function(){
+			var id = $(this).attr("id")
+			// console.log($("#main-option-view").css("height"))
+			console.log($(window).width())
 			if($(window).width()<768){
-				$("#"+id).css("fontSize",14)
-			}
-			else{
 				$("#"+id).css("fontSize",20)
 			}
+			else{
+				$("#"+id).css("fontSize",30)
+			}
 
-    			
-    			$(".side-bar-link").css("color","black")
-    		})
+			$(".side-bar-link").css("color","black")
 
-    		function setUpMainView(){
-    		    $("#main-option-view").css("color","white")
-	    		$("#main-option-view").html($("#products-hover-view").html())
-    		}
-    	})
-    </script>
+			if(id=="PRODUCTS"){
+				gsap.to("#main-option-view,#side-bar",{
+					duration: 1,
+					backgroundColor: "#8221eb",
+				})
+				$("#main-option-view").css("color","white")
+				$("#main-option-view").html($("#products-hover-view").html())
+			}
+			else if(id=="SERIVCES"){
+				gsap.to("#main-option-view,#side-bar",{
+					duration: 1,
+					backgroundColor: "#f76125",
+				})
+				$("#main-option-view").css("color","white")
+				$("#main-option-view").html($("#services-hover-view").html())
+			}
+			else if(id=="BLOG"){
+				gsap.to("#main-option-view,#side-bar",{ // Yellow
+					duration: 1,
+					backgroundColor: "#afeb38",
+				})
+				$("#main-option-view").css("color","black")
+				$("#main-option-view").html($("#blog-hover-view").html())
+			}
+			else if(id=="ARCHIEVE"){
+				gsap.to("#main-option-view,#side-bar",{ // Green
+					duration: 1,
+					backgroundColor: "#87f731",
+				})
+			}
+			else if(id=="ABOUTUS"){
+				gsap.to("#main-option-view,#side-bar",{ // Paste
+					duration: 1,
+					backgroundColor: "#30e357",
+				})
+			}
+			else if(id=="CAREER"){
+				gsap.to("#main-option-view,#side-bar",{ // Blue
+					duration: 1,
+					backgroundColor: "#3086e3",
+				})
+			}
+			else if(id=="CONTACT"){
+				gsap.to("#main-option-view,#side-bar",{ // Violet
+					duration: 1,
+					backgroundColor: "#5634e0",
+				})
+			}
 
-{% endblock %} <!--end of body-->
+			if($("#side-bar").css("height")>$("#main-option-view").css("height")){
+				$("#main-option-view").css("height",$("#side-bar").css("height"))
+			}
+			else{
+				$("#side-bar").css("height",$("#main-option-view").css("height"))
+			}
+			
+		},function(){
+			var id = $(this).attr("id")
+
+		if($(window).width()<768){
+			$("#"+id).css("fontSize",14)
+		}
+		else{
+			$("#"+id).css("fontSize",20)
+		}
+
+			
+			$(".side-bar-link").css("color","black")
+		})
+
+		function setUpMainView(){
+			$("#main-option-view").css("color","white")
+			$("#main-option-view").html($("#products-hover-view").html())
+		}
+	})
+</script>
+{% endblock footer_scripts %}
