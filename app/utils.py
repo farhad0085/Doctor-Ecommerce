@@ -12,6 +12,7 @@ def save_picture(img, folder):
     #output_size = (150, 150)
     buffer = io.BytesIO(img)
     i = Image.open(buffer)
+    i.convert('RGB')
     i.save(picture_path)
 
     return picture_fn

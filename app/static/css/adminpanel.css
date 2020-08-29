@@ -1,0 +1,23 @@
+#panel-side-bar{
+	max-width: 100%;
+	background-color: #100b1f;
+	color: white;
+	min-height: 100vh;
+	padding: 0px;
+}
+.panel-side-bar-btn{
+	display: block;
+	background-color: #100b1f;
+	color: white;
+	min-width: 100%;
+	border: none;
+}
+.panel-side-bar-btn:active{
+	transform: scale(1.1);
+	border:none;
+	outline:none;
+}
+
+#panel-main-area{
+	padding-top: 10px;
+}

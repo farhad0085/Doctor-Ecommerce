@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<!-- Product Main Area -->
+	<div id="add-product-main-area">
+        <h2>ADD PRODUCT</h2>
+        <label>Product Name <input id="product-name" type="text"></label><br>
+        <label>Description </label><br>
+        <textarea style="min-width: 100%;min-height: 100px;" id="description-textarea"></textarea><br>
+        <label>Price <input id="price" type="number" min="0"></label>
+        <label>Quantity <input id="quantity" type="number" min="0"></label><br>
+        <label for="pic-1">Picture 1</label>
+        <input id="pic-1" type="file"><br>
+        <label for="pic-2">Picture 2</label>
+        <input id="pic-2" type="file"><br>
+        <label for="pic-3">Picture 3</label>
+        <input id="pic-3" type="file"><br>
+        <button type="button" id="add-product-upload" class="btn btn-primary">Upload</button>
+    </div>
+    <!-- Specialist Main Area -->
+    <div id="add-specialist-main-area">
+        <h2>ADD SPECIALIST</h2>
+        <table>
+    		<tr>
+    			<td><label for="name">Name</label></td>
+    			<td><input id="name" type="text"></td>
+    		</tr>
+    		<tr>
+    			<td><label for="email">Email</label></td>
+    			<td><input id="email" type="email"></td>
+    		</tr>
+    		<tr>
+    			<td><label for="date_of_birth">Date of birth </label></td>
+    			<td><input id="date_of_birth" type="date"></td>
+    		</tr>
+    		<tr>
+    			<td><label for="password">Password </label></td>
+    			<td><input id="password" type="password"></td>
+    		</tr>
+    		<tr>
+    			<td><label for="address">Address </label></td>
+    			<td><input id="address" type="text"></td>
+    		</tr>
+    		<tr>
+    			<td><label for="contact_no">Contact No. </label></td>
+    			<td><input id="contact_no" type="tel"></td>
+    		</tr>
+    		<tr>
+    			<td><label for="age">Age </label></td>
+    			<td><input id="age" type="number" min=18></td>
+    		</tr>
+    		<tr>
+    			<td><label for="pic-1">Profile Picture</label></td>
+    			<td><input id="pic-1" type="file"></td>
+    		</tr>
+    	</table>
+    	<button type="button" id="add-specialist-upload" class="btn btn-primary">Upload</button>
+    </div>
+</body>
+</html>

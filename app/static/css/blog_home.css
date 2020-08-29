@@ -1,0 +1,26 @@
+
+
+#main-view{
+	min-height: 200px;
+	max-width: 100%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+#main-view-title{
+	font-size: 34px;
+}
+.sample-item-view{
+	box-shadow: 0px 0px 5px gray;
+	padding-left: 10px;
+	margin-top: 20px;
+}
+.sample-title{
+	font-size: 20px;
+	font-weight: bolder;
+	display: inline;
+}
+.sample-last-updated{
+	display: inline;
+	float: right;
+	padding-right: 10px;
+}
