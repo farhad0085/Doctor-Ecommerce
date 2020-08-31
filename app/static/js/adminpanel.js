@@ -7,14 +7,14 @@ function initAdminPanel(){
         $(this).css("background-color","#244bc9")
 
         if($(this).attr("id")=="add-product-btn"){ // Add product main area setup
-            $("#panel-main-area").load("templates/adminpanel_parts.html #add-product-main-area",function(){
-                addProductPanelSetup() // product panel setup
-            })
+			$("#add-product-main-area").show()
+			$("#add-specialist-main-area").hide()
+			addProductPanelSetup() // product panel setup
         }
         else if($(this).attr("id")=="add-specialist-btn"){ // Add product main area setup
-            $("#panel-main-area").load("templates/adminpanel_parts.html #add-specialist-main-area",function(){
-                addSpecialistPanelSetup() // specialist panel setup
-            })
+			$("#add-product-main-area").hide()
+			$("#add-specialist-main-area").show()
+            addSpecialistPanelSetup() // specialist panel setup
         }
     })
 

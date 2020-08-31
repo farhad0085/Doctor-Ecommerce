@@ -61,7 +61,7 @@
 			</div>
 			<div id="header-bar" class="row">
 				<div class="col-12 col-md-8">
-					<a href="#" type="button" class="btn nav-btn-ctm">HOME</a>
+					<a href="{{ url_for('web.home') }}" type="button" class="btn nav-btn-ctm">HOME</a>
 					<a href="#" type="button" class="btn nav-btn-ctm">PRODUCTS</a>
 					<a href="#" type="button" class="btn nav-btn-ctm">SERVICES</a>
 					<a href="#" type="button" class="btn nav-btn-ctm">ABOUT US</a>
@@ -69,6 +69,7 @@
 				<div class="col-12 col-md-4">
 					{% if current_user.is_authenticated %}
 						<a href="{{ url_for('web.logout') }}" type="button" class="btn nav-btn-ctm security-info-btn">Logout</a>
+						<a href="{{ url_for('web.dashboard') }}" type="button" class="btn nav-btn-ctm security-info-btn">Dashboard</a>
 					{% else %}
 						<a href="{{ url_for('web.login') }}" type="button" class="btn nav-btn-ctm security-info-btn">Login</a>
 					{% endif %}

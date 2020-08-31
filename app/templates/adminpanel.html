@@ -1,0 +1,33 @@
+{% extends 'layouts/base.html' %}
+
+{% block header_scripts %}
+<script src="{{ url_for('static', filename='js/adminpanel.js') }}"></script>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/sidebar.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/adminpanel.css') }}">
+{% endblock header_scripts %}
+
+{% block content %}
+<div class="row" style="min-width: 100%;margin:0px;padding: 0px">
+    <div class="col-4 col-sm-2" id="panel-side-bar">
+        <button type="button" id="add-product-btn" class="panel-side-bar-btn">Add Product</button>
+        <button type="button" id="add-specialist-btn" class="panel-side-bar-btn">Add Specialist</button>
+    </div>
+    <div class="col-8 col-sm-10" id="panel-main-area">
+        {% include('components/adminpanel_parts.html') %}
+    </div>
+</div>
+<div id="dummy"></div>
+{% endblock content %}
+
+{% block footer_scripts %}
+<script>
+    $(document).ready(function () {
+        init("container", "footer-container", "top-floating-offer") //initializing basic elements
+        startFloatingOffer("top-floating-offer", "container") // starting float view from basics.js. CSS is in basics.css
+        startHeaderAndCanvasBasic("header-canvas-container", "logo", "header-canvas", "header-bar") //Starting header and canvas
+        
+        // init admin panel
+        initAdminPanel()
+    })
+</script>
+{% endblock footer_scripts %}

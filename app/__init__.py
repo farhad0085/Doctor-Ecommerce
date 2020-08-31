@@ -23,6 +23,7 @@ bcrypt = Bcrypt(app)
 auth = HTTPBasicAuth(app)
 
 login_manager = LoginManager(app)
+login_manager.login_view = 'web.login'
 
 from app.api.routes import api
 from app.web.routes import web

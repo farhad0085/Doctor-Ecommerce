@@ -1,0 +1,86 @@
+<!-- Product Main Area -->
+<div id="add-product-main-area">
+	<div class="col-md-8 offset-md-2 mt-4">
+		<h2>ADD PRODUCT</h2>
+		<form>
+			<div class="form-group">
+				<label>Product Name</label>
+				<input class="form-control" id="product-name" type="text">
+			</div>
+			<div class="form-group">
+				<label>Description </label>
+				<textarea class="form-control" rows="8" cols="5" id="description-textarea"></textarea>
+			</div>
+			<div class="form-group">
+				<div class="form-row">
+					<div class="col">
+						<label>Price</label>
+						<input class="form-control" id="price" type="number" min="0">
+					</div>
+					<div class="col">
+						<label>Quantity</label>
+						<input class="form-control" id="quantity" type="number" min="0">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="custom-file">
+					<label class="custom-file-label" for="pic-1">Picture 1</label>
+					<input id="pic-1" type="file" class="custom-file-input"><br>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="custom-file">
+					<label class="custom-file-label" for="pic-2">Picture 2</label>
+					<input id="pic-2" type="file" class="custom-file-input"><br>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="custom-file">
+					<label class="custom-file-label" for="pic-3">Picture 3</label>
+					<input id="pic-3" type="file" class="custom-file-input"><br>
+				</div>
+			</div>
+			<button type="button" id="add-product-upload" class="btn btn-primary">Upload</button>
+		</form>
+	</div>
+</div>
+<!-- Specialist Main Area -->
+<div id="add-specialist-main-area" style="display: none;">
+	<h2>ADD SPECIALIST</h2>
+	<table>
+		<tr>
+			<td><label for="name">Name</label></td>
+			<td><input id="name" type="text"></td>
+		</tr>
+		<tr>
+			<td><label for="email">Email</label></td>
+			<td><input id="email" type="email"></td>
+		</tr>
+		<tr>
+			<td><label for="date_of_birth">Date of birth </label></td>
+			<td><input id="date_of_birth" type="date"></td>
+		</tr>
+		<tr>
+			<td><label for="password">Password </label></td>
+			<td><input id="password" type="password"></td>
+		</tr>
+		<tr>
+			<td><label for="address">Address </label></td>
+			<td><input id="address" type="text"></td>
+		</tr>
+		<tr>
+			<td><label for="contact_no">Contact No. </label></td>
+			<td><input id="contact_no" type="tel"></td>
+		</tr>
+		<tr>
+			<td><label for="age">Age </label></td>
+			<td><input id="age" type="number" min=18></td>
+		</tr>
+		<tr>
+			<td><label for="pic-1">Profile Picture</label></td>
+			<td><input id="pic-1" type="file"></td>
+		</tr>
+	</table>
+	<button type="button" id="add-specialist-upload" class="btn btn-primary">Upload</button>
+</div>
