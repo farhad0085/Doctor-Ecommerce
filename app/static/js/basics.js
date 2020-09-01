@@ -1,5 +1,5 @@
 var api_host = "http://127.0.0.1:5000"
-var web_host = "http://localhost/GDApp/frontend"
+var web_host = "http://127.0.0.1:5000"
 var STORAGE_LANG = "gd_language"
 
 
@@ -7,7 +7,7 @@ function init(container_id,footer_container_id,floating_view_id){
 	// Loading Footer
 	// $("#"+footer_container_id).load("templates/footer_main.html #footer-container")
     console.log("{{ url_for('static', filename='css/homepage.css') }}")
-    $("#"+footer_container_id).load("{{ url_for('static', filename='templates/footer_main.html') }} #footer-container")
+    // $("#"+footer_container_id).load("{{ url_for('static', filename='templates/footer_main.html') }} #footer-container")
 	// setting up container
     try{
         $("#"+container_id).css("top",document.getElementById(floating_view_id).getBoundingClientRect().bottom+"px");
@@ -95,9 +95,10 @@ function startHeaderAndCanvasBasic(header_canvas_container_id,logo_id,header_can
 	//setting up logo
 	$("#"+logo_id).css("top",0+"px")
     $("#"+logo_id).css("min-height",$("#"+header_canvas_id).css("height"))
-    $("#"+header_bar_id).load("templates/parts.html #nav-bar-items-a-href-links",function(){
-        $("#"+header_bar_id).html($("#nav-bar-items-a-href-links").html())
-    })
+    $("#"+header_canvas_id).css("top",100+"px")
+    // $("#"+header_bar_id).load("templates/parts.html #nav-bar-items-a-href-links",function(){
+    //     $("#"+header_bar_id).html($("#nav-bar-items-a-href-links").html())
+    // })
     
     $("#"+header_canvas_container_id).css("height",$("#"+header_canvas_id).css("height"))
     // console.log($("#"+header_canvas_id).css("height"))
@@ -181,11 +182,11 @@ function lang_handle(){
 
 function navbar_login_processes_lt(jData,current_page){
                 
-    tag("jData",jData[1]["message"])
-    tag("jData",jData[0]["role"])
-    if($("#login-btn").get()[0]){ //loop until log-in button is ready through jquery.load()
+    // tag("jData",jData[1]["message"])
+    // tag("jData",jData[0]["role"])
+    // if($("#login-btn").get()[0]){ //loop until log-in button is ready through jquery.load()
         
-        if(jData[1]["message"]=="success"){
+        if(jData!=null && jData[1]["message"]=="success"){
             $("#login-btn").find("#login-text").css("display","none")
             $("#login-btn").find("#logout-text").css("display","block")
             $("#login-btn").attr("href","#")
@@ -202,39 +203,41 @@ function navbar_login_processes_lt(jData,current_page){
             //     $("#admin-panel-btn").css("display","inline")
             // }
         }
-    }
-    else{
-        setTimeout(function(){
-            navbar_login_processes_lt(jData,current_page)}
-            ,50)
-    }
+    // }
+    // else{
+    //     setTimeout(function(){
+    //         navbar_login_processes_lt(jData,current_page)}
+    //         ,50)
+    // }
 }
 
-function navbar_lang_processes_lt(current_page){
+function navbar_lang_processes_lt(){
                 
-    if($("#login-btn").get()[0]){ //loop until log-in button is ready through jquery.load()
+    // if($("#login-btn").get()[0]){ //loop until log-in button is ready through jquery.load()
         lang_handle()
         // Language Selection Section
-
+        tag("clicked")
         $(".lang-dropdown-item").click(function(){
 
             $("#lang-dropdownMenuButton").html($(this).html())
             if($(this).html()=="English"){
                 localStorage.setItem(STORAGE_LANG,"english")
-                window.open(web_host+"/"+current_page+".html","_self")
+                // window.open(web_host+current_page,"_self")
+                location.reload()
             }
             else{
                 localStorage.setItem(STORAGE_LANG,"bangla")
-                window.open(web_host+"/"+current_page+".html","_self")
+                // window.open(web_host+current_page,"_self")
+                location.reload()
             }
             return false
         })
         
-    }
-    else{
-        // tag("looping...")
-        setTimeout(function(){
-            navbar_lang_processes_lt(current_page)}
-            ,50)
-    }
+    // }
+    // else{
+    //     // tag("looping...")
+    //     setTimeout(function(){
+    //         navbar_lang_processes_lt(current_page)}
+    //         ,50)
+    // }
 }
