@@ -6,7 +6,7 @@
 
 
 {% block content %}
-	 <div class="container debug-shadow" id="container"> <!--Right Side Bar-->
+<!-- <div class="container"> --> <!--Right Side Bar-->
     	<!--Top Floting Offer-->
     	<!-- <div> 
 	    	<div id="top-floating-offer">
@@ -16,12 +16,12 @@
 	    		<i class="fa fa-window-close" aria-hidden="true"></i>
 	    	</div>
 	    </div> -->
-	    <div id="top-notification">
+	    <!-- <div id="top-notification">
 	    	<div id="top-notification-close" style="float: right; padding-right: 10px"><i class="fa fa-window-close"></i></div>
 	    	<div id="top-notification-data">স্বাগতম গ্লাক্সোডার্মাতে!!</div>
-	    </div>
+	    </div> -->
 
-	    <div id="header">
+	    <!-- <div id="header">
             <div id="header-canvas-container">
                 <canvas id="header-canvas"></canvas>
                 <div id="logo">
@@ -30,9 +30,9 @@
                     <img id="logo-grad" src="{{ url_for('static',filename='images/gradient.png') }}">
                 </div>
             </div>
-            <div id="header-bar" class="row"> <!-- Loading from template/parts.html -->
+            <div id="header-bar" class="row">
             </div>  
-        </div> 
+        </div> --> 
 
 	    <!-- <div id="logo-place" >
 	    	<img id="logo-img" src="images/WelcometoGLAXODERMA.svg" style="align-self: center;">
@@ -122,12 +122,9 @@
 	    	</div>
 	    </div>
 
-    	<div id="footer-container">
-    		
-    	</div>
         <div id="dummy" style="display: none;"></div>
 
-    </div>
+   
 
 
     
@@ -137,12 +134,12 @@
 		<div class="english-static">
 			WANT TO VISIT<br>
 			OUR E-STORE TO <br>
-			<b>FIND OUT PRODUCTS,<br>SKINCARE SOLUTIONS<br>
+			<b>FIND OUT PRODUCTS,<br>SKINCARE SOLUTIONS</b><br>
 		</div>
 		<div class="bangla-static">
 			ভিজিট করুন <br>
 			আমাদের ই স্টোর <br>
-			<b> পণ্যগুলি, স্কিন কেয়ার সলিউশনস সন্ধান করুন <br>
+			<b> পণ্যগুলি, স্কিন কেয়ার সলিউশনস সন্ধান করুন</b> <br>
 		</div>
 		<br>
 		<button type="button" class="btn btn-ctm">
@@ -156,7 +153,7 @@
 	<div id="blog-hover-view" style="display: none;">
 		<div class="english-static">
 			KNOW ABOUT<br>
-			<b>SKINCARE<br>PROBLEMS<br>& SOLUTIONS<br>
+			<b>SKINCARE<br>PROBLEMS<br>& SOLUTIONS</b><br>
 		</div>
 		<div class="bangla-static">		
 			স্কিনকেয়ার <br> সমস্যাগুলি <br> ও সমাধানগুলি <br>
@@ -176,12 +173,12 @@
 		<div class="english-static">
 			LOOKING FOR<br>
 			CONSULTING WITH<br>
-			<b>DERMATOLOGIST &<br>EXPERT PROFESSIONALS<br>
+			<b>DERMATOLOGIST &<br>EXPERT PROFESSIONALS</b><br>
 		</div>
 		<div class="bangla-static">		
 			পরামর্শের জন্য 
 			<b> ডার্মাটোলজিস্ট এবং <br> বিশেষজ্ঞ পেশাদার <br>
-			খুজুন
+			খুজুন </b>
 			<br>
 		</div>
 		<br>
@@ -192,11 +189,11 @@
 
 
 	</div>
-	
     
-    
+<!-- </div> -->
 
 {% endblock content %} <!--end of body-->
+
 {% block footer_scripts %}
 <script>
 
@@ -214,13 +211,13 @@
 			topNotificationHandler("top-notification")
 			},4*1000)           
 		
-		navbar_lang_processes_lt("index")
+		navbar_lang_processes_lt()
 		// Getting the current user data
 		getuser(data_handler)
 
 		function data_handler(jData){
 			setTimeout(function(){
-					navbar_login_processes_lt(jData,"index")}
+					navbar_login_processes_lt(jData,"/")}
 					,50)
 		}
 

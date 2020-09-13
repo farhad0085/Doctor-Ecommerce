@@ -7,7 +7,7 @@
 {% block content %}
 <!-- Sign in Page View -->
 <div class="container">
-    <div class="row">
+    <div class="row" style="margin:0px;padding: 0px;">
         <div class="col-12" id="signUpBody">
             <ul class="nav nav-tabs">
                 <li class="nav-item ">
@@ -105,9 +105,14 @@
     window.addEventListener("load", function () {
 
         init("container", "footer-container", "top-floating-offer") //initializing basic elements
-        startFloatingOffer("top-floating-offer", "container") // starting float view from basics.js. CSS is in basics.css
+        // startFloatingOffer("top-floating-offer", "container") // starting float view from basics.js. CSS is in basics.css
         startHeaderAndCanvasBasic("header-canvas-container", "logo", "header-canvas", "header-bar") //Starting header and canvas
+        setupNotification("top-notification")
+        setTimeout(function(){
+            topNotificationHandler("top-notification")
+            },4*1000)
 
+        navbar_lang_processes_lt()  
 
         var xhr = new XMLHttpRequest();
 
